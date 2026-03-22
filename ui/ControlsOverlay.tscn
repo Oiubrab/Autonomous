@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/ControlsOverlay.gd" id="1_controls"]
+
+[node name="ControlsOverlay" type="CanvasLayer"]
+layer = 99
+script = ExtResource("1_controls")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -160.0
+offset_right = 180.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+text = "CONTROLS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
+
+[node name="Move" type="Label" parent="Panel/VBox"]
+text = "WASD / Arrows    Move"
+
+[node name="Camera" type="Label" parent="Panel/VBox"]
+text = "Mouse             Orbit camera"
+
+[node name="Jump" type="Label" parent="Panel/VBox"]
+text = "Space             Jump"
+
+[node name="Dodge" type="Label" parent="Panel/VBox"]
+text = "Shift             Dodge"
+
+[node name="Attack" type="Label" parent="Panel/VBox"]
+text = "Left click        Attack"
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/VBox"]
+
+[node name="Controls" type="Label" parent="Panel/VBox"]
+text = "Tab               This menu"
+
+[node name="Debug" type="Label" parent="Panel/VBox"]
+text = "F1                Debug overlay"
+
+[node name="Cursor" type="Label" parent="Panel/VBox"]
+text = "Escape            Release cursor"
+
+[node name="HSeparator3" type="HSeparator" parent="Panel/VBox"]
+
+[node name="Dismiss" type="Label" parent="Panel/VBox"]
+text = "[ Tab to close ]"
+horizontal_alignment = 1
+modulate = Color(0.6, 0.6, 0.65, 1)
+theme_override_font_sizes/font_size = 12
