@@ -1,5 +1,4 @@
 extends Node
-class_name DegradationSystem
 
 ## Degradation threshold constants — define them once here.
 ## All systems that need to act on degradation ranges import these.

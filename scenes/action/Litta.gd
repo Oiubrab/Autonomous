@@ -107,7 +107,6 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y = 0.0
 
 func _update_camera() -> void:
-	camera_arm.position = global_position + Vector3(0, 1.4, 0)
 	camera_arm.rotation.y = _camera_yaw
 	camera_arm.rotation.x = _camera_pitch
 

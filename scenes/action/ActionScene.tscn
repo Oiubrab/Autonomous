@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scenes/action/ActionScene.gd" id="1_scene"]
 [ext_resource type="Script" path="res://scenes/action/Litta.gd" id="2_litta"]
 [ext_resource type="Script" path="res://scenes/action/LittaAutonomy.gd" id="3_autonomy"]
 [ext_resource type="PackedScene" path="res://ui/DeathScreen.tscn" id="4_death"]
 [ext_resource type="PackedScene" path="res://ui/DebugOverlay.tscn" id="5_debug"]
-[ext_resource type="Script" path="res://systems/DegradationSystem.gd" id="6_degrad"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
 radius = 0.4
@@ -97,6 +96,3 @@ autowrap_mode = 3
 [node name="DeathScreen" parent="." instance=ExtResource("4_death")]
 
 [node name="DebugOverlay" parent="." instance=ExtResource("5_debug")]
-
-[node name="DegradationSystem" type="Node" parent="."]
-script = ExtResource("6_degrad")
