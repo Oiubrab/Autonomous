@@ -1,0 +1,17 @@
+# Godot generated
+.godot/
+
+# Import metadata
+*.import
+
+# Export presets
+export_presets.cfg
+
+# Mono/C#
+.mono/
+data_*/
+mono_crash.*.json
+
+# API key / env
+.env
+api_key.txt
