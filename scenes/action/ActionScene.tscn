@@ -1,0 +1,102 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scenes/action/ActionScene.gd" id="1_scene"]
+[ext_resource type="Script" path="res://scenes/action/Litta.gd" id="2_litta"]
+[ext_resource type="Script" path="res://scenes/action/LittaAutonomy.gd" id="3_autonomy"]
+[ext_resource type="PackedScene" path="res://ui/DeathScreen.tscn" id="4_death"]
+[ext_resource type="PackedScene" path="res://ui/DebugOverlay.tscn" id="5_debug"]
+[ext_resource type="Script" path="res://systems/DegradationSystem.gd" id="6_degrad"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_litta"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Material_litta"]
+albedo_color = Color(0.8, 0.6, 0.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.2, 0.2, 0.25, 1)
+
+[sub_resource type="Environment" id="Environment_world"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.4, 1)
+ambient_light_energy = 0.5
+
+[node name="ActionScene" type="Node3D"]
+script = ExtResource("1_scene")
+
+[node name="Litta" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+script = ExtResource("2_litta")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Litta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_litta")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Litta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_litta")
+surface_material_override/0 = SubResource("Material_litta")
+
+[node name="CameraArm" type="Node3D" parent="Litta"]
+transform = Transform3D(1, 0, 0, 0, 0.951, -0.309, 0, 0.309, 0.951, 0, 1.4, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Litta/CameraArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="LittaAutonomy" type="Node" parent="Litta"]
+script = ExtResource("3_autonomy")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("Material_floor")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 10, 0)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_world")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="ReframeLabel" type="Label" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -40.0
+offset_right = 300.0
+offset_bottom = 40.0
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="DeathScreen" parent="." instance=ExtResource("4_death")]
+
+[node name="DebugOverlay" parent="." instance=ExtResource("5_debug")]
+
+[node name="DegradationSystem" type="Node" parent="."]
+script = ExtResource("6_degrad")

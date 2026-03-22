@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/DebugOverlay.gd" id="1_script"]
+
+[node name="DebugOverlay" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -260.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 180.0
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "DEBUG"
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+
+[node name="DegradationRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBox/DegradationRow"]
+layout_mode = 2
+text = "degradation_level"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+
+[node name="Value" type="Label" parent="Panel/VBox/DegradationRow"]
+layout_mode = 2
+text = "0.00"
+custom_minimum_size = Vector2(40, 0)
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 2
+
+[node name="DegradationSlider" type="HSlider" parent="Panel/VBox"]
+layout_mode = 2
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 0.0
+
+[node name="StageRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="StageKey" type="Label" parent="Panel/VBox/StageRow"]
+layout_mode = 2
+text = "stage"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+
+[node name="Value" type="Label" parent="Panel/VBox/StageRow"]
+layout_mode = 2
+text = "clear"
+theme_override_font_sizes/font_size = 11
+
+[node name="ReframeButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Reframe: OFF"
+theme_override_font_sizes/font_size = 11
+
+[node name="HintLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "F1 to toggle"
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)

@@ -1,4 +1,4 @@
-# LITTA — Narrative & World-Building Document
+# AUTONOMOUS — Narrative & World-Building Document
 *Working Document — Ideas in Progress*
 
 ---

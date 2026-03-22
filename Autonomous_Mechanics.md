@@ -1,4 +1,4 @@
-# LITTA — Game Mechanics Document
+# AUTONOMOUS — Game Mechanics Document
 *Working Document — Ideas in Progress*
 
 ---

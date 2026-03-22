@@ -1,13 +1,13 @@
-# LITTA — Claude Code Development Brief
+# AUTONOMOUS — Claude Code Development Brief
 *High-Level Architecture & Build Order*
 
 ---
 
 ## Overview for Claude Code
 
-This document is a brief for Claude Code to understand the scope, architecture, and build priorities for **Litta** — a Godot-based game with three distinct gameplay tiers, an LLM-powered mechanic, and a central narrative mechanic built around progressive loss of player control.
+This document is a brief for Claude Code to understand the scope, architecture, and build priorities for **Autonomous** — a Godot-based game with three distinct gameplay tiers, an LLM-powered mechanic, and a central narrative mechanic built around progressive loss of player control.
 
-Read the companion documents **Litta_Narrative.md** and **Litta_Mechanics.md** before proceeding. This brief assumes familiarity with both.
+Read the companion documents **Autonomous_Narrative.md** and **Autonomous_Mechanics.md** before proceeding. This brief assumes familiarity with both.
 
 The developer is a solo practitioner. Scope should be managed carefully. When in doubt, build the simplest version that tests the concept, not the most complete version.
 
