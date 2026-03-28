@@ -6,15 +6,16 @@ extends CanvasLayer
 ## Folgim dying: "You died"                            → game over, no continue
 
 @onready var panel: ColorRect = $Panel
-@onready var message_label: Label = $Panel/MessageLabel
-@onready var sub_label: Label = $Panel/SubLabel
-@onready var continue_label: Label = $Panel/ContinueLabel
+@onready var message_label: Label = $Panel/VBox/MessageLabel
+@onready var sub_label: Label = $Panel/VBox/SubLabel
+@onready var continue_label: Label = $Panel/VBox/ContinueLabel
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
 signal respawn_requested()
 
 func _ready() -> void:
 	visible = false
+	set_process_unhandled_input(false)
 	GameState.litta_died.connect(_on_litta_died)
 	GameState.game_over.connect(_on_game_over)
 

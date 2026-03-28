@@ -41,7 +41,7 @@ func _build() -> void:
 	play("idle")
 
 # Animations that have root motion baked in — strip their position tracks on import.
-const _STRIP_ROOT_MOTION := ["run_jump"]
+const _STRIP_ROOT_MOTION := ["run", "walk", "attack", "dead", "jump", "run_jump"]
 
 func _import_anim(our_name: String, filename: String) -> void:
 	var scene = load(_DIR + filename)
@@ -73,12 +73,12 @@ func _strip_root_motion(anim: Animation) -> void:
 
 func _rename_first_anim(player: AnimationPlayer, new_name: String) -> void:
 	var lib = player.get_animation_library("")
-	for name: String in lib.get_animation_list():
-		if name == "RESET" or name == new_name:
+	for anim_name: String in lib.get_animation_list():
+		if anim_name == "RESET" or anim_name == new_name:
 			continue
-		var anim = lib.get_animation(name)
+		var anim = lib.get_animation(anim_name)
 		lib.add_animation(new_name, anim)
-		lib.remove_animation(name)
+		lib.remove_animation(anim_name)
 		break
 
 func _find_player(node: Node) -> AnimationPlayer:

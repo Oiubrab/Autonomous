@@ -3,7 +3,7 @@ extends Node3D
 ## Root controller for the action segment.
 ## Owns the reframe trigger and hooks up death/respawn flow.
 
-const LITTA_SPAWN := Vector3(0, 0.5, 0)
+const LITTA_SPAWN := Vector3(0, 0.9, 9)
 
 @onready var litta: CharacterBody3D = $Litta
 @onready var death_screen: CanvasLayer = $DeathScreen

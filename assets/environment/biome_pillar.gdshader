@@ -24,17 +24,18 @@ void fragment() {
 	vec4 tex = texture(albedo_texture, UV);
 	vec3 col = tex.rgb;
 
-	// Identify bioluminescent/organic pixels: green-dominant and not too dark.
-	float green_dom = col.g - max(col.r, col.b);
+	// Identify bioluminescent/organic pixels: any saturated (non-grey) surface that isn't too dark.
+	// Using chroma instead of green-dominance so it works across all Meshy asset colour palettes.
+	float chroma = max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b));
 	float brightness = dot(col, vec3(0.333));
-	float organic = smoothstep(0.08, 0.35, green_dom) * smoothstep(0.1, 0.45, brightness);
+	float organic = smoothstep(0.05, 0.22, chroma) * smoothstep(0.1, 0.45, brightness);
 
 	// Spatial pattern — breaks up the shift so it ripples rather than floods uniformly.
 	float spatial = sin(UV.y * 10.0 + UV.x * 5.0) * 0.4;
 
 	// Time-driven hue angle: cycles through roughly green → cyan → blue → violet → back.
 	float t = TIME * shift_speed + phase_offset + spatial;
-	float hue_angle = sin(t) * 1.4; // ±1.4 rad covers a wide colour arc
+	float hue_angle = sin(t) * 2.8; // ±2.8 rad (~160°) reaches red/violet at the extremes
 
 	vec3 shifted = hue_rotate(col, hue_angle);
 

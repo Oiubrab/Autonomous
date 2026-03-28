@@ -13,7 +13,7 @@ const INPUT_LAG_MIN  = 0.2   # seconds of lag at stage start
 const INPUT_LAG_MAX  = 0.5   # seconds of lag at stage end
 
 ## Returns the named stage for a given degradation level.
-static func get_stage(level: float) -> String:
+func get_stage(level: float) -> String:
 	if level < STAGE_CLEAR_MAX:
 		return "clear"
 	elif level < STAGE_LAG_MAX:

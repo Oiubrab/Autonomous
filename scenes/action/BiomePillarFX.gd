@@ -29,7 +29,7 @@ func _swap_materials(mesh_instance: MeshInstance3D, phase: float) -> void:
 		shader_mat.shader = _SHADER
 		# Carry over the albedo texture from the imported material if present.
 		if original is BaseMaterial3D:
-			var tex := original.albedo_texture
+			var tex: Texture2D = original.albedo_texture
 			if tex:
 				shader_mat.set_shader_parameter("albedo_texture", tex)
 		shader_mat.set_shader_parameter("phase_offset", phase)
