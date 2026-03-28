@@ -11,17 +11,19 @@ const _SHADER = preload("res://assets/environment/biome_pillar.gdshader")
 @export var uv_scale: Vector2 = Vector2(1.0, 1.0)
 
 func _ready() -> void:
-	# Unique phase per pillar so they don't all pulse identically.
+	# Unique phase and speed per instance so surfaces shift independently.
 	var phase := randf() * TAU
-	_apply_to_node(self, phase)
+	# Mean 0.8, ±0.3 variance — keeps everything visibly active but not uniform.
+	var speed := clampf(randf_range(0.5, 1.1), 0.1, 2.0)
+	_apply_to_node(self, phase, speed)
 
-func _apply_to_node(node: Node, phase: float) -> void:
+func _apply_to_node(node: Node, phase: float, speed: float) -> void:
 	if node is MeshInstance3D:
-		_swap_materials(node, phase)
+		_swap_materials(node, phase, speed)
 	for child in node.get_children():
-		_apply_to_node(child, phase)
+		_apply_to_node(child, phase, speed)
 
-func _swap_materials(mesh_instance: MeshInstance3D, phase: float) -> void:
+func _swap_materials(mesh_instance: MeshInstance3D, phase: float, speed: float) -> void:
 	var mesh := mesh_instance.mesh
 	if not mesh:
 		return
@@ -37,5 +39,6 @@ func _swap_materials(mesh_instance: MeshInstance3D, phase: float) -> void:
 			if tex:
 				shader_mat.set_shader_parameter("albedo_texture", tex)
 		shader_mat.set_shader_parameter("phase_offset", phase)
+		shader_mat.set_shader_parameter("shift_speed", speed)
 		shader_mat.set_shader_parameter("uv_scale", uv_scale)
 		mesh_instance.set_surface_override_material(i, shader_mat)

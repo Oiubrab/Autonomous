@@ -6,8 +6,8 @@ uniform sampler2D albedo_texture : source_color, hint_default_white;
 // Set to match the material's uv1_scale for tiled flat surfaces (walls, floor).
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 
-// Speed of the colour cycle. Varied per instance via phase_offset.
-uniform float shift_speed : hint_range(0.05, 1.0) = 0.3;
+// Speed of the colour cycle. Randomised per instance by BiomePillarFX.
+uniform float shift_speed : hint_range(0.1, 2.0) = 0.8;
 
 // Per-instance random offset so pillars don't pulse in sync.
 uniform float phase_offset : hint_range(0.0, 6.28) = 0.0;
