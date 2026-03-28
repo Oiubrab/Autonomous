@@ -87,11 +87,12 @@ shape = SubResource("CapsuleShape3D_litta")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
 script = ExtResource("7_model")
 
-[node name="CameraArm" type="Node3D" parent="Litta" unique_id=1010897057]
-transform = Transform3D(1, 0, 0, 0, 0.951, -0.309, 0, 0.309, 0.951, 0, 1.4, 0)
+[node name="CameraArm" type="SpringArm3D" parent="Litta" unique_id=1010897057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+spring_length = 6.0
+collision_mask = 1
 
 [node name="Camera3D" type="Camera3D" parent="Litta/CameraArm" unique_id=348177014]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
 [node name="LittaAutonomy" type="Node" parent="Litta" unique_id=88383221]
 script = ExtResource("3_autonomy")

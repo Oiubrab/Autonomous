@@ -21,7 +21,7 @@ var dodge_direction: Vector3 = Vector3.ZERO
 var is_dead: bool = false
 var _jumped_from_run: bool = false
 
-@onready var camera_arm: Node3D = $CameraArm
+@onready var camera_arm: SpringArm3D = $CameraArm
 @onready var camera: Camera3D = $CameraArm/Camera3D
 @onready var model: Node3D = $LittaModel
 
@@ -39,6 +39,8 @@ var _camera_zoom: float = 6.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# Prevent the spring arm from colliding with Litta herself.
+	camera_arm.add_excluded_object(get_rid())
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -146,7 +148,7 @@ func _apply_gravity(delta: float) -> void:
 func _update_camera() -> void:
 	camera_arm.rotation.y = _camera_yaw
 	camera_arm.rotation.x = _camera_pitch
-	camera.position.z = _camera_zoom
+	camera_arm.spring_length = _camera_zoom
 
 func _get_input_direction() -> Vector3:
 	var raw := Vector3(
