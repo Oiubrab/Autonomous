@@ -40,7 +40,7 @@ size = Vector3(30, 3, 0.4)
 [sub_resource type="StandardMaterial3D" id="Material_wall"]
 albedo_texture = ExtResource("14_wall_tex")
 roughness = 0.95
-uv1_scale = Vector3(3, 1, 1)
+uv1_scale = Vector3(10, 1, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pillar"]
 height = 2.8579712
@@ -222,7 +222,7 @@ transform = Transform3D(-1.9999284, 0, -0.016929727, 0, 2, 0, 0.016929727, 0, -1
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_W" type="StaticBody3D" parent="Arena/Decor" unique_id=500000011]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -12, 2, 0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -14.099467, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/WallConduit_W" unique_id=500000012]
 shape = SubResource("BoxShape3D_conduit")
@@ -232,13 +232,13 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_E" type="StaticBody3D" parent="Arena/Decor" unique_id=500000013]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 12, 2, 0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14.0474415, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/WallConduit_E" unique_id=500000014]
 shape = SubResource("BoxShape3D_conduit")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_E" unique_id=406930901 instance=ExtResource("11_conduit")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(-1.9999747, 0, 0.010052941, 0, 2, 0, -0.010052941, 0, -1.9999747, 0, 0.01903963, -0.024445534)
 script = ExtResource("9_pillar_fx")
 
 [node name="FloorGrowth_1" type="StaticBody3D" parent="Arena/Decor" unique_id=500000015]
