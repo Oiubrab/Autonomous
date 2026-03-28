@@ -4,6 +4,7 @@
 
 [node name="ControlsOverlay" type="CanvasLayer"]
 layer = 99
+process_mode = 3
 script = ExtResource("1_controls")
 
 [node name="Panel" type="PanelContainer" parent="."]
