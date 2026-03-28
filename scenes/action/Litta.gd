@@ -31,6 +31,11 @@ var _camera_yaw: float = 0.0
 const CAMERA_SENSITIVITY = 0.003
 const CAMERA_MIN_PITCH = -1.0
 const CAMERA_MAX_PITCH = 0.5
+const CAMERA_ZOOM_STEP = 0.5
+const CAMERA_ZOOM_MIN = 2.0
+const CAMERA_ZOOM_MAX = 12.0
+
+var _camera_zoom: float = 6.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -43,6 +48,11 @@ func _input(event: InputEvent) -> void:
 			CAMERA_MIN_PITCH,
 			CAMERA_MAX_PITCH
 		)
+	elif event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_camera_zoom = clamp(_camera_zoom - CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX)
+		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_camera_zoom = clamp(_camera_zoom + CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX)
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -133,6 +143,7 @@ func _apply_gravity(delta: float) -> void:
 func _update_camera() -> void:
 	camera_arm.rotation.y = _camera_yaw
 	camera_arm.rotation.x = _camera_pitch
+	camera.position.z = _camera_zoom
 
 func _get_input_direction() -> Vector3:
 	var raw := Vector3(
