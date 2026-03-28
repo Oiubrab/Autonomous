@@ -32,15 +32,15 @@ roughness = 0.92
 uv1_scale = Vector3(4, 4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
-size = Vector3(30, 3, 0.4)
+size = Vector3(30, 6, 0.4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wall"]
-size = Vector3(30, 3, 0.4)
+size = Vector3(30, 6, 0.4)
 
 [sub_resource type="StandardMaterial3D" id="Material_wall"]
 albedo_texture = ExtResource("14_wall_tex")
 roughness = 0.95
-uv1_scale = Vector3(10, 1, 1)
+uv1_scale = Vector3(10, 2, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pillar"]
 height = 2.8579712
@@ -55,6 +55,12 @@ size = Vector3(3.8950806, 3.5129395, 1.6573486)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_growth"]
 size = Vector3(1.9802246, 1.7389679, 2.9243164)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_roof"]
+size = Vector3(30, 0.4, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_roof"]
+size = Vector3(30, 0.4, 30)
 
 [sub_resource type="Environment" id="Environment_world"]
 background_mode = 1
@@ -101,10 +107,22 @@ surface_material_override/0 = SubResource("Material_floor")
 script = ExtResource("9_pillar_fx")
 uv_scale = Vector2(4, 4)
 
+[node name="Roof" type="StaticBody3D" parent="." unique_id=500000040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roof" unique_id=500000041]
+shape = SubResource("BoxShape3D_roof")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Roof" unique_id=500000042]
+mesh = SubResource("BoxMesh_roof")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(10, 10)
+
 [node name="Arena" type="Node3D" parent="." unique_id=172109996]
 
 [node name="NorthWall" type="StaticBody3D" parent="Arena" unique_id=268594780]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -15)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/NorthWall" unique_id=1377022864]
 shape = SubResource("BoxShape3D_wall")
@@ -113,10 +131,10 @@ shape = SubResource("BoxShape3D_wall")
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
-uv_scale = Vector2(10, 1)
+uv_scale = Vector2(10, 2)
 
 [node name="SouthWall" type="StaticBody3D" parent="Arena" unique_id=2045905541]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 15)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/SouthWall" unique_id=539650356]
 shape = SubResource("BoxShape3D_wall")
@@ -125,10 +143,10 @@ shape = SubResource("BoxShape3D_wall")
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
-uv_scale = Vector2(10, 1)
+uv_scale = Vector2(10, 2)
 
 [node name="WestWall" type="StaticBody3D" parent="Arena" unique_id=727991894]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -15, 1.5, 0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -15, 3, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/WestWall" unique_id=833876489]
 shape = SubResource("BoxShape3D_wall")
@@ -137,10 +155,10 @@ shape = SubResource("BoxShape3D_wall")
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
-uv_scale = Vector2(10, 1)
+uv_scale = Vector2(10, 2)
 
 [node name="EastWall" type="StaticBody3D" parent="Arena" unique_id=1405063630]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 15, 1.5, 0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 15, 3, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/EastWall" unique_id=657357701]
 shape = SubResource("BoxShape3D_wall")
@@ -149,7 +167,7 @@ shape = SubResource("BoxShape3D_wall")
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
-uv_scale = Vector2(10, 1)
+uv_scale = Vector2(10, 2)
 
 [node name="Pillars" type="Node3D" parent="Arena" unique_id=585245623]
 
