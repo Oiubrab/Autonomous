@@ -6,6 +6,10 @@ extends Node3D
 
 const _SHADER = preload("res://assets/environment/biome_pillar.gdshader")
 
+## UV tiling to match the surface's texture repeat. Leave at (1,1) for GLB assets;
+## set to match uv1_scale for tiled flat surfaces (walls, floor).
+@export var uv_scale: Vector2 = Vector2(1.0, 1.0)
+
 func _ready() -> void:
 	# Unique phase per pillar so they don't all pulse identically.
 	var phase := randf() * TAU
@@ -33,4 +37,5 @@ func _swap_materials(mesh_instance: MeshInstance3D, phase: float) -> void:
 			if tex:
 				shader_mat.set_shader_parameter("albedo_texture", tex)
 		shader_mat.set_shader_parameter("phase_offset", phase)
+		shader_mat.set_shader_parameter("uv_scale", uv_scale)
 		mesh_instance.set_surface_override_material(i, shader_mat)

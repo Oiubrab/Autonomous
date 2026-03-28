@@ -2,6 +2,10 @@ shader_type spatial;
 
 uniform sampler2D albedo_texture : source_color, hint_default_white;
 
+// UV tiling multiplier — default (1,1) preserves existing GLB asset behaviour.
+// Set to match the material's uv1_scale for tiled flat surfaces (walls, floor).
+uniform vec2 uv_scale = vec2(1.0, 1.0);
+
 // Speed of the colour cycle. Varied per instance via phase_offset.
 uniform float shift_speed : hint_range(0.05, 1.0) = 0.3;
 
@@ -21,7 +25,7 @@ vec3 hue_rotate(vec3 col, float angle) {
 }
 
 void fragment() {
-	vec4 tex = texture(albedo_texture, UV);
+	vec4 tex = texture(albedo_texture, UV * uv_scale);
 	vec3 col = tex.rgb;
 
 	// Identify bioluminescent/organic pixels: any saturated (non-grey) surface that isn't too dark.
