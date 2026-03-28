@@ -4,7 +4,7 @@ extends Node3D
 ## Instances the base GLB (Idle) and merges animations from the other per-animation GLBs
 ## into a single AnimationPlayer at runtime. Works because all GLBs share the same skeleton.
 
-const _DIR = "res://characters/litta/"
+const _DIR = "res://assets/characters/litta/"
 
 # Maps our internal animation names to the GLB files that contain them.
 const _SOURCES := {

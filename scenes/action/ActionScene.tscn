@@ -1,12 +1,13 @@
-[gd_scene load_steps=27 format=3]
+[gd_scene format=3 uid="uid://diea6wbs12ohh"]
 
-[ext_resource type="Script" path="res://scenes/action/ActionScene.gd" id="1_scene"]
-[ext_resource type="Script" path="res://scenes/action/Litta.gd" id="2_litta"]
-[ext_resource type="Script" path="res://scenes/action/LittaAutonomy.gd" id="3_autonomy"]
+[ext_resource type="Script" uid="uid://bghjeuvho5m4y" path="res://scenes/action/ActionScene.gd" id="1_scene"]
+[ext_resource type="Script" uid="uid://dkcqyourpbj51" path="res://scenes/action/Litta.gd" id="2_litta"]
+[ext_resource type="Script" uid="uid://vh5icup5trva" path="res://scenes/action/LittaAutonomy.gd" id="3_autonomy"]
 [ext_resource type="PackedScene" path="res://ui/DeathScreen.tscn" id="4_death"]
 [ext_resource type="PackedScene" path="res://ui/DebugOverlay.tscn" id="5_debug"]
 [ext_resource type="PackedScene" path="res://ui/ControlsOverlay.tscn" id="6_controls"]
-[ext_resource type="Script" path="res://scenes/action/LittaModel.gd" id="7_model"]
+[ext_resource type="Script" uid="uid://bfq15rmpnkf5p" path="res://scenes/action/LittaModel.gd" id="7_model"]
+[ext_resource type="PackedScene" path="res://assets/environment/biome_pillar.glb" id="8_biome_pillar"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
 radius = 0.4
@@ -20,8 +21,21 @@ size = Vector3(30, 0.2, 30)
 
 [sub_resource type="StandardMaterial3D" id="Material_floor"]
 albedo_color = Color(0.18, 0.18, 0.22, 1)
-roughness = 0.9
 metallic = 0.1
+roughness = 0.9
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
+size = Vector3(30, 3, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(30, 3, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="Material_wall"]
+albedo_color = Color(0.12, 0.12, 0.16, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pillar"]
+radius = 0.6
+height = 4.0
 
 [sub_resource type="Environment" id="Environment_world"]
 background_mode = 1
@@ -34,160 +48,135 @@ fog_light_color = Color(0.08, 0.08, 0.14, 1)
 fog_density = 0.03
 fog_aerial_perspective = 0.2
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
-size = Vector3(30, 3, 0.4)
-
-[sub_resource type="BoxMesh" id="BoxMesh_wall"]
-size = Vector3(30, 3, 0.4)
-
-[sub_resource type="StandardMaterial3D" id="Material_wall"]
-albedo_color = Color(0.12, 0.12, 0.16, 1)
-roughness = 1.0
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
-size = Vector3(1.2, 4, 1.2)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
-size = Vector3(1.2, 4, 1.2)
-
-[sub_resource type="StandardMaterial3D" id="Material_pillar"]
-albedo_color = Color(0.2, 0.18, 0.24, 1)
-roughness = 0.8
-metallic = 0.2
-
-[node name="ActionScene" type="Node3D"]
+[node name="ActionScene" type="Node3D" unique_id=951435807]
 script = ExtResource("1_scene")
 
-[node name="Litta" type="CharacterBody3D" parent="."]
+[node name="Litta" type="CharacterBody3D" parent="." unique_id=1426622050]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 script = ExtResource("2_litta")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Litta"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Litta" unique_id=1122540688]
 shape = SubResource("CapsuleShape3D_litta")
 
-[node name="LittaModel" type="Node3D" parent="Litta"]
+[node name="LittaModel" type="Node3D" parent="Litta" unique_id=568351302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
 script = ExtResource("7_model")
 
-[node name="CameraArm" type="Node3D" parent="Litta"]
+[node name="CameraArm" type="Node3D" parent="Litta" unique_id=1010897057]
 transform = Transform3D(1, 0, 0, 0, 0.951, -0.309, 0, 0.309, 0.951, 0, 1.4, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Litta/CameraArm"]
+[node name="Camera3D" type="Camera3D" parent="Litta/CameraArm" unique_id=348177014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="LittaAutonomy" type="Node" parent="Litta"]
+[node name="LittaAutonomy" type="Node" parent="Litta" unique_id=88383221]
 script = ExtResource("3_autonomy")
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Floor" type="StaticBody3D" parent="." unique_id=239501918]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=2140478806]
 shape = SubResource("BoxShape3D_floor")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=531101592]
 mesh = SubResource("BoxMesh_floor")
 surface_material_override/0 = SubResource("Material_floor")
 
-[node name="Arena" type="Node3D" parent="."]
+[node name="Arena" type="Node3D" parent="." unique_id=172109996]
 
-[node name="NorthWall" type="StaticBody3D" parent="Arena"]
+[node name="NorthWall" type="StaticBody3D" parent="Arena" unique_id=268594780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -15)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/NorthWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/NorthWall" unique_id=1377022864]
 shape = SubResource("BoxShape3D_wall")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/NorthWall"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/NorthWall" unique_id=2002683222]
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 
-[node name="SouthWall" type="StaticBody3D" parent="Arena"]
+[node name="SouthWall" type="StaticBody3D" parent="Arena" unique_id=2045905541]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 15)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/SouthWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/SouthWall" unique_id=539650356]
 shape = SubResource("BoxShape3D_wall")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/SouthWall"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/SouthWall" unique_id=378400772]
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 
-[node name="WestWall" type="StaticBody3D" parent="Arena"]
+[node name="WestWall" type="StaticBody3D" parent="Arena" unique_id=727991894]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -15, 1.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/WestWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/WestWall" unique_id=833876489]
 shape = SubResource("BoxShape3D_wall")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/WestWall"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/WestWall" unique_id=421705380]
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 
-[node name="EastWall" type="StaticBody3D" parent="Arena"]
+[node name="EastWall" type="StaticBody3D" parent="Arena" unique_id=1405063630]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 15, 1.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/EastWall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/EastWall" unique_id=657357701]
 shape = SubResource("BoxShape3D_wall")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/EastWall"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/EastWall" unique_id=1738362108]
 mesh = SubResource("BoxMesh_wall")
 surface_material_override/0 = SubResource("Material_wall")
 
-[node name="Pillars" type="Node3D" parent="Arena"]
+[node name="Pillars" type="Node3D" parent="Arena" unique_id=585245623]
 
-[node name="Pillar_NW" type="StaticBody3D" parent="Arena/Pillars"]
+[node name="Pillar_NW" type="StaticBody3D" parent="Arena/Pillars" unique_id=1651715981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2, -7)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillars/Pillar_NW"]
-shape = SubResource("BoxShape3D_pillar")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillars/Pillar_NW" unique_id=829389108]
+shape = SubResource("CylinderShape3D_pillar")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/Pillars/Pillar_NW"]
-mesh = SubResource("BoxMesh_pillar")
-surface_material_override/0 = SubResource("Material_pillar")
+[node name="BiomePillar" parent="Arena/Pillars/Pillar_NW" instance=ExtResource("8_biome_pillar")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -2, 0)
 
-[node name="Pillar_NE" type="StaticBody3D" parent="Arena/Pillars"]
+[node name="Pillar_NE" type="StaticBody3D" parent="Arena/Pillars" unique_id=999605331]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2, -7)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillars/Pillar_NE"]
-shape = SubResource("BoxShape3D_pillar")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillars/Pillar_NE" unique_id=981952816]
+shape = SubResource("CylinderShape3D_pillar")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/Pillars/Pillar_NE"]
-mesh = SubResource("BoxMesh_pillar")
-surface_material_override/0 = SubResource("Material_pillar")
+[node name="BiomePillar" parent="Arena/Pillars/Pillar_NE" instance=ExtResource("8_biome_pillar")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -2, 0)
 
-[node name="Pillar_SW" type="StaticBody3D" parent="Arena"]
+[node name="Pillar_SW" type="StaticBody3D" parent="Arena" unique_id=76806159]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2, 7)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillar_SW"]
-shape = SubResource("BoxShape3D_pillar")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillar_SW" unique_id=2033979024]
+shape = SubResource("CylinderShape3D_pillar")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/Pillar_SW"]
-mesh = SubResource("BoxMesh_pillar")
-surface_material_override/0 = SubResource("Material_pillar")
+[node name="BiomePillar" parent="Arena/Pillar_SW" instance=ExtResource("8_biome_pillar")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -2, 0)
 
-[node name="Pillar_SE" type="StaticBody3D" parent="Arena"]
+[node name="Pillar_SE" type="StaticBody3D" parent="Arena" unique_id=893279056]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2, 7)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillar_SE"]
-shape = SubResource("BoxShape3D_pillar")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Pillar_SE" unique_id=494633542]
+shape = SubResource("CylinderShape3D_pillar")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/Pillar_SE"]
-mesh = SubResource("BoxMesh_pillar")
-surface_material_override/0 = SubResource("Material_pillar")
+[node name="BiomePillar" parent="Arena/Pillar_SE" instance=ExtResource("8_biome_pillar")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -2, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1266343408]
 transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 10, 0)
 light_energy = 0.8
 shadow_enabled = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1162888904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 light_color = Color(0.4, 0.35, 0.6, 1)
 light_energy = 3.0
 omni_range = 20.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=379050382]
 environment = SubResource("Environment_world")
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1788873270]
 
-[node name="ReframeLabel" type="Label" parent="HUD"]
+[node name="ReframeLabel" type="Label" parent="HUD" unique_id=1559302518]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -197,13 +186,12 @@ offset_left = -300.0
 offset_top = -40.0
 offset_right = 300.0
 offset_bottom = 40.0
-text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="DeathScreen" parent="." instance=ExtResource("4_death")]
+[node name="DeathScreen" parent="." unique_id=38676934 instance=ExtResource("4_death")]
 
-[node name="DebugOverlay" parent="." instance=ExtResource("5_debug")]
+[node name="DebugOverlay" parent="." unique_id=233451225 instance=ExtResource("5_debug")]
 
-[node name="ControlsOverlay" parent="." instance=ExtResource("6_controls")]
+[node name="ControlsOverlay" parent="." unique_id=41681411 instance=ExtResource("6_controls")]
