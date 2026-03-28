@@ -49,14 +49,14 @@ radius = 0.6
 height = 4.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_spire"]
-radius = 1.2
-height = 5.0
+radius = 1.5
+height = 6.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_conduit"]
 size = Vector3(4, 4, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_growth"]
-size = Vector3(3, 1.5, 3)
+size = Vector3(3, 3, 3)
 
 [sub_resource type="Environment" id="Environment_world"]
 background_mode = 1
@@ -188,13 +188,14 @@ script = ExtResource("9_pillar_fx")
 [node name="Decor" type="Node3D" parent="Arena" unique_id=500000001]
 
 [node name="SpireBody" type="StaticBody3D" parent="Arena/Decor" unique_id=500000005]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/SpireBody" unique_id=500000006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 shape = SubResource("CylinderShape3D_spire")
 
 [node name="RepeaterSpire" parent="Arena/Decor/SpireBody" instance=ExtResource("10_spire")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -2.5, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_N" type="StaticBody3D" parent="Arena/Decor" unique_id=500000007]
@@ -204,7 +205,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 2, -12)
 shape = SubResource("BoxShape3D_conduit")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_N" instance=ExtResource("11_conduit")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_S" type="StaticBody3D" parent="Arena/Decor" unique_id=500000009]
@@ -214,7 +215,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 12)
 shape = SubResource("BoxShape3D_conduit")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_S" instance=ExtResource("11_conduit")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_W" type="StaticBody3D" parent="Arena/Decor" unique_id=500000011]
@@ -224,7 +225,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -12, 2, 0)
 shape = SubResource("BoxShape3D_conduit")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_W" instance=ExtResource("11_conduit")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_E" type="StaticBody3D" parent="Arena/Decor" unique_id=500000013]
@@ -234,47 +235,47 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 12, 2, 0)
 shape = SubResource("BoxShape3D_conduit")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_E" instance=ExtResource("11_conduit")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="FloorGrowth_1" type="StaticBody3D" parent="Arena/Decor" unique_id=500000015]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.5, 3)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_1" unique_id=500000016]
 shape = SubResource("BoxShape3D_growth")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_1" instance=ExtResource("12_floor_growth")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.5, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="FloorGrowth_2" type="StaticBody3D" parent="Arena/Decor" unique_id=500000017]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4, 0.5, -3)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4, 1.5, -3)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_2" unique_id=500000018]
 shape = SubResource("BoxShape3D_growth")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_2" instance=ExtResource("12_floor_growth")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.5, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="FloorGrowth_3" type="StaticBody3D" parent="Arena/Decor" unique_id=500000019]
-transform = Transform3D(0.707, 0, -0.707, 0, 1, 0, 0.707, 0, 0.707, -3, 0.5, 4)
+transform = Transform3D(0.707, 0, -0.707, 0, 1, 0, 0.707, 0, 0.707, -3, 1.5, 4)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_3" unique_id=500000020]
 shape = SubResource("BoxShape3D_growth")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_3" instance=ExtResource("12_floor_growth")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.5, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="FloorGrowth_4" type="StaticBody3D" parent="Arena/Decor" unique_id=500000021]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5, 0.5, -4)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5, 1.5, -4)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_4" unique_id=500000022]
 shape = SubResource("BoxShape3D_growth")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_4" instance=ExtResource("12_floor_growth")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.5, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1266343408]
