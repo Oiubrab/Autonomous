@@ -48,11 +48,14 @@ func _input(event: InputEvent) -> void:
 			CAMERA_MIN_PITCH,
 			CAMERA_MAX_PITCH
 		)
-	elif event is InputEventMouseButton:
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+	elif event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_camera_zoom = clamp(_camera_zoom - CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX)
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_camera_zoom = clamp(_camera_zoom + CAMERA_ZOOM_STEP, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX)
+		elif Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			# Click anywhere to recapture after Escape.
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 

@@ -62,3 +62,17 @@ text = "[ Tab to close ]"
 horizontal_alignment = 1
 modulate = Color(0.6, 0.6, 0.65, 1)
 theme_override_font_sizes/font_size = 12
+
+[node name="HintLabel" type="Label" parent=".."]
+anchors_preset = 3
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -30.0
+offset_right = 200.0
+offset_bottom = -10.0
+text = "Tab — controls"
+theme_override_font_sizes/font_size = 11
+modulate = Color(0.65, 0.65, 0.75, 0.55)
