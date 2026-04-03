@@ -13,15 +13,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -160.0
-offset_right = 180.0
-offset_bottom = 160.0
+offset_left = -220.0
+offset_top = -240.0
+offset_right = 220.0
+offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
 [node name="Title" type="Label" parent="Panel/VBox"]
 text = "CONTROLS"
@@ -30,36 +30,41 @@ theme_override_font_sizes/font_size = 16
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
 
-[node name="Move" type="Label" parent="Panel/VBox"]
-text = "WASD / Arrows    Move"
-
-[node name="Camera" type="Label" parent="Panel/VBox"]
-text = "Mouse             Orbit camera"
-
-[node name="Jump" type="Label" parent="Panel/VBox"]
-text = "Space             Jump"
-
-[node name="Dodge" type="Label" parent="Panel/VBox"]
-text = "Shift             Dodge"
-
-[node name="Attack" type="Label" parent="Panel/VBox"]
-text = "Left click        Attack"
+[node name="ActionsVBox" type="VBoxContainer" parent="Panel/VBox"]
+theme_override_constants/separation = 6
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBox"]
 
-[node name="Controls" type="Label" parent="Panel/VBox"]
-text = "Tab               This menu"
-
-[node name="Debug" type="Label" parent="Panel/VBox"]
-text = "F1                Debug overlay"
-
-[node name="Cursor" type="Label" parent="Panel/VBox"]
-text = "Escape            Release cursor"
-
-[node name="HSeparator3" type="HSeparator" parent="Panel/VBox"]
-
 [node name="Dismiss" type="Label" parent="Panel/VBox"]
-text = "[ Tab to close ]"
+text = "Tab to close"
+horizontal_alignment = 1
+modulate = Color(0.6, 0.6, 0.65, 1)
+theme_override_font_sizes/font_size = 11
+
+[node name="CaptureOverlay" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -60.0
+offset_right = 160.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="CaptureOverlay"]
+alignment = 1
+
+[node name="PressLabel" type="Label" parent="CaptureOverlay/VBox"]
+text = "Press a key..."
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+
+[node name="CancelLabel" type="Label" parent="CaptureOverlay/VBox"]
+text = "Escape to cancel"
 horizontal_alignment = 1
 modulate = Color(0.6, 0.6, 0.65, 1)
 theme_override_font_sizes/font_size = 12
