@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://qg8ggv0xbk5k" path="res://assets/environment/floor_growth.glb" id="12_floor_growth"]
 [ext_resource type="Texture2D" uid="uid://bv3by6dabuheu" path="res://assets/environment/floor_bio_texture.png" id="13_floor_tex"]
 [ext_resource type="Texture2D" uid="uid://ckxyhga1hj5qb" path="res://assets/environment/wall_bio_texture.png" id="14_wall_tex"]
+[ext_resource type="PackedScene" path="res://assets/environment/door_arch.glb" id="15_door_arch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
 radius = 0.4
@@ -239,15 +240,14 @@ shape = SubResource("BoxShape3D_conduit")
 transform = Transform3D(-1.9991094, 0, 0.059681438, 0, 2, 0, -0.059681438, 0, -1.9991094, 0, 0, 2.0896292)
 script = ExtResource("9_pillar_fx")
 
-[node name="WallConduit_S" type="StaticBody3D" parent="Arena/Decor" unique_id=500000009]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 12)
+[node name="DoorArch" type="StaticBody3D" parent="Arena/Decor" unique_id=500000009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.6)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/WallConduit_S" unique_id=500000010]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.080200195, 2.2591553)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/DoorArch" unique_id=500000010]
 shape = SubResource("BoxShape3D_conduit")
 
-[node name="BiomeMesh" parent="Arena/Decor/WallConduit_S" unique_id=1635882585 instance=ExtResource("11_conduit")]
-transform = Transform3D(-1.9999284, 0, -0.016929727, 0, 2, 0, 0.016929727, 0, -1.9999284, 0, 0, 2.070387)
+[node name="BiomeMesh" parent="Arena/Decor/DoorArch" unique_id=1635882585 instance=ExtResource("15_door_arch")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_W" type="StaticBody3D" parent="Arena/Decor" unique_id=500000011]
