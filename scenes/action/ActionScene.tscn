@@ -103,6 +103,18 @@ size = Vector3(13, 6, 0.4)
 [sub_resource type="BoxMesh" id="BoxMesh_south_r"]
 size = Vector3(13, 6, 0.4)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_arch_gap_top"]
+size = Vector3(4, 2.5, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_arch_gap_top"]
+size = Vector3(4, 2.5, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_upper_south"]
+size = Vector3(30, 4, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_upper_south"]
+size = Vector3(30, 4, 0.4)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_r2_floor"]
 size = Vector3(30, 0.2, 50)
 
@@ -239,6 +251,30 @@ mesh = SubResource("BoxMesh_south_r")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
 uv_scale = Vector2(4, 2)
+
+[node name="ArchGapFiller" type="StaticBody3D" parent="Arena" unique_id=500000130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.75, 15)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/ArchGapFiller" unique_id=500000131]
+shape = SubResource("BoxShape3D_arch_gap_top")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/ArchGapFiller" unique_id=500000132]
+mesh = SubResource("BoxMesh_arch_gap_top")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(1, 1)
+
+[node name="UpperSouthWall" type="StaticBody3D" parent="Arena" unique_id=500000133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 15)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/UpperSouthWall" unique_id=500000134]
+shape = SubResource("BoxShape3D_upper_south")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/UpperSouthWall" unique_id=500000135]
+mesh = SubResource("BoxMesh_upper_south")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(10, 1)
 
 [node name="WestWall" type="StaticBody3D" parent="Arena" unique_id=727991894]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -15, 3, 0)
