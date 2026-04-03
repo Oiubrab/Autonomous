@@ -1,4 +1,4 @@
-extends StaticBody3D
+extends Node3D
 
 ## Openable door. Slides the door panel up into the wall when opened.
 ## Player stands in the interaction zone and presses "interact" (E).
