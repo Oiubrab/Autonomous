@@ -149,10 +149,10 @@ roughness = 0.92
 uv1_scale = Vector3(4, 4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_door_panel"]
-size = Vector3(4, 6, 0.3)
+size = Vector3(5, 7, 0.4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_door_panel"]
-size = Vector3(4, 6, 0.3)
+size = Vector3(5, 7, 0.4)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_interact"]
 radius = 3.0
@@ -389,8 +389,8 @@ shape = SubResource("BoxShape3D_arch_top")
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 2.3559875, -0.0071849823)
 script = ExtResource("9_pillar_fx")
 
-[node name="DoorPanel" type="Node3D" parent="Arena/Decor/DoorArch" unique_id=500000080]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+[node name="DoorPanel" type="AnimatableBody3D" parent="Arena/Decor/DoorArch" unique_id=500000080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 
 [node name="PanelCollision" type="CollisionShape3D" parent="Arena/Decor/DoorArch/DoorPanel" unique_id=500000081]
 shape = SubResource("BoxShape3D_door_panel")
