@@ -15,6 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://bv3by6dabuheu" path="res://assets/environment/floor_bio_texture.png" id="13_floor_tex"]
 [ext_resource type="Texture2D" uid="uid://ckxyhga1hj5qb" path="res://assets/environment/wall_bio_texture.png" id="14_wall_tex"]
 [ext_resource type="PackedScene" uid="uid://cbd31fv6vm4io" path="res://assets/environment/door_arch.glb" id="15_door_arch"]
+[ext_resource type="PackedScene" path="res://assets/environment/door_panel.glb" id="16_door_panel"]
+[ext_resource type="PackedScene" path="res://assets/environment/terminal.glb" id="17_terminal"]
+[ext_resource type="Script" path="res://scenes/action/Door.gd" id="18_door"]
+[ext_resource type="Script" path="res://scenes/action/Terminal.gd" id="19_terminal_script"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
 radius = 0.4
@@ -80,6 +84,60 @@ size = Vector3(1.9802246, 1.7389679, 2.9243164)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_growth_4"]
 size = Vector3(1.9802246, 1.7389679, 2.9243164)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_south_l"]
+size = Vector3(13, 6, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_south_l"]
+size = Vector3(13, 6, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_south_r"]
+size = Vector3(13, 6, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_south_r"]
+size = Vector3(13, 6, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2_floor"]
+size = Vector3(30, 0.2, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r2_floor"]
+size = Vector3(30, 0.2, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2_ceiling"]
+size = Vector3(30, 0.4, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r2_ceiling"]
+size = Vector3(30, 0.4, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2_left"]
+size = Vector3(50, 10, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r2_side"]
+size = Vector3(50, 10, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2_right"]
+size = Vector3(50, 10, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r2_far"]
+size = Vector3(30, 10, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r2_far"]
+size = Vector3(30, 10, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="Material_floor_r2"]
+albedo_texture = ExtResource("13_floor_tex")
+metallic = 0.05
+roughness = 0.92
+uv1_scale = Vector3(4, 4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door_panel"]
+size = Vector3(4, 6, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_door_panel"]
+size = Vector3(4, 6, 0.3)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_interact"]
+radius = 3.0
 
 [sub_resource type="Environment" id="Environment_world"]
 background_mode = 1
@@ -152,17 +210,29 @@ surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
 uv_scale = Vector2(10, 2)
 
-[node name="SouthWall" type="StaticBody3D" parent="Arena" unique_id=2045905541]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 15)
+[node name="SouthWall_L" type="StaticBody3D" parent="Arena" unique_id=2045905541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 3, 15)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/SouthWall" unique_id=539650356]
-shape = SubResource("BoxShape3D_wall")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/SouthWall_L" unique_id=539650356]
+shape = SubResource("BoxShape3D_south_l")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/SouthWall" unique_id=378400772]
-mesh = SubResource("BoxMesh_wall")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/SouthWall_L" unique_id=378400772]
+mesh = SubResource("BoxMesh_south_l")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
-uv_scale = Vector2(10, 2)
+uv_scale = Vector2(4, 2)
+
+[node name="SouthWall_R" type="StaticBody3D" parent="Arena" unique_id=500000050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 3, 15)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/SouthWall_R" unique_id=500000051]
+shape = SubResource("BoxShape3D_south_r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Arena/SouthWall_R" unique_id=500000052]
+mesh = SubResource("BoxMesh_south_r")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(4, 2)
 
 [node name="WestWall" type="StaticBody3D" parent="Arena" unique_id=727991894]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -15, 3, 0)
@@ -259,6 +329,7 @@ script = ExtResource("9_pillar_fx")
 
 [node name="DoorArch" type="StaticBody3D" parent="Arena/Decor" unique_id=500000009]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.6)
+script = ExtResource("18_door")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/DoorArch" unique_id=500000010]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.077732086, 2.3394954, -0.1893053)
@@ -267,6 +338,28 @@ shape = SubResource("BoxShape3D_door")
 [node name="BiomeMesh" parent="Arena/Decor/DoorArch" unique_id=1635882585 instance=ExtResource("15_door_arch")]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 2.3559875, -0.0071849823)
 script = ExtResource("9_pillar_fx")
+
+[node name="DoorPanel" type="Node3D" parent="Arena/Decor/DoorArch" unique_id=500000080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="PanelCollision" type="CollisionShape3D" parent="Arena/Decor/DoorArch/DoorPanel" unique_id=500000081]
+shape = SubResource("BoxShape3D_door_panel")
+
+[node name="PanelMesh" parent="Arena/Decor/DoorArch/DoorPanel" unique_id=500000082 instance=ExtResource("16_door_panel")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("9_pillar_fx")
+
+[node name="InteractArea" type="Area3D" parent="Arena/Decor/DoorArch" unique_id=500000083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/DoorArch/InteractArea" unique_id=500000084]
+shape = SubResource("SphereShape3D_interact")
+
+[node name="PromptLabel" type="Label3D" parent="Arena/Decor/DoorArch" unique_id=500000085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
+text = "[E] Open / Close"
+font_size = 24
+modulate = Color(0.8, 0.9, 1, 1)
 
 [node name="WallConduit_W" type="StaticBody3D" parent="Arena/Decor" unique_id=500000011]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -14.099467, 2, 0)
@@ -379,6 +472,176 @@ offset_bottom = 40.0
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="Room2" type="Node3D" parent="." unique_id=500000060]
+
+[node name="Floor" type="StaticBody3D" parent="Room2" unique_id=500000061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Floor" unique_id=500000062]
+shape = SubResource("BoxShape3D_r2_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/Floor" unique_id=500000063]
+mesh = SubResource("BoxMesh_r2_floor")
+surface_material_override/0 = SubResource("Material_floor_r2")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(4, 7)
+
+[node name="Ceiling" type="StaticBody3D" parent="Room2" unique_id=500000064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2, 40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Ceiling" unique_id=500000065]
+shape = SubResource("BoxShape3D_r2_ceiling")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/Ceiling" unique_id=500000066]
+mesh = SubResource("BoxMesh_r2_ceiling")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(4, 7)
+
+[node name="WestWall" type="StaticBody3D" parent="Room2" unique_id=500000067]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -15, 5, 40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/WestWall" unique_id=500000068]
+shape = SubResource("BoxShape3D_r2_left")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/WestWall" unique_id=500000069]
+mesh = SubResource("BoxMesh_r2_side")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(17, 3)
+
+[node name="EastWall" type="StaticBody3D" parent="Room2" unique_id=500000070]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 15, 5, 40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/EastWall" unique_id=500000071]
+shape = SubResource("BoxShape3D_r2_right")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/EastWall" unique_id=500000072]
+mesh = SubResource("BoxMesh_r2_side")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(17, 3)
+
+[node name="FarWall" type="StaticBody3D" parent="Room2" unique_id=500000073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 65)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/FarWall" unique_id=500000074]
+shape = SubResource("BoxShape3D_r2_far")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/FarWall" unique_id=500000075]
+mesh = SubResource("BoxMesh_r2_far")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(10, 3)
+
+[node name="Terminal_1" type="StaticBody3D" parent="Room2" unique_id=500000090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 35)
+script = ExtResource("19_terminal_script")
+terminal_id = "terminal_01"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Terminal_1" unique_id=500000091]
+shape = SubResource("BoxShape3D_growth_1")
+
+[node name="TerminalMesh" parent="Room2/Terminal_1" unique_id=500000092 instance=ExtResource("17_terminal")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("9_pillar_fx")
+
+[node name="InteractArea" type="Area3D" parent="Room2/Terminal_1" unique_id=500000093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Terminal_1/InteractArea" unique_id=500000094]
+shape = SubResource("SphereShape3D_interact")
+
+[node name="PromptLabel" type="Label3D" parent="Room2/Terminal_1" unique_id=500000095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+text = "[E] Access Terminal"
+font_size = 20
+modulate = Color(0.3, 1, 0.7, 1)
+
+[node name="ScreenLight" type="OmniLight3D" parent="Room2/Terminal_1" unique_id=500000096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.3)
+light_color = Color(0.1, 0.9, 0.6, 1)
+light_energy = 1.5
+omni_range = 4.0
+
+[node name="Terminal_2" type="StaticBody3D" parent="Room2" unique_id=500000100]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, 50)
+script = ExtResource("19_terminal_script")
+terminal_id = "terminal_02"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Terminal_2" unique_id=500000101]
+shape = SubResource("BoxShape3D_growth_2")
+
+[node name="TerminalMesh" parent="Room2/Terminal_2" unique_id=500000102 instance=ExtResource("17_terminal")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("9_pillar_fx")
+
+[node name="InteractArea" type="Area3D" parent="Room2/Terminal_2" unique_id=500000103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Terminal_2/InteractArea" unique_id=500000104]
+shape = SubResource("SphereShape3D_interact")
+
+[node name="PromptLabel" type="Label3D" parent="Room2/Terminal_2" unique_id=500000105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+text = "[E] Access Terminal"
+font_size = 20
+modulate = Color(0.3, 1, 0.7, 1)
+
+[node name="ScreenLight" type="OmniLight3D" parent="Room2/Terminal_2" unique_id=500000106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.3)
+light_color = Color(0.1, 0.9, 0.6, 1)
+light_energy = 1.5
+omni_range = 4.0
+
+[node name="Terminal_3" type="StaticBody3D" parent="Room2" unique_id=500000110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 35)
+script = ExtResource("19_terminal_script")
+terminal_id = "terminal_03"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Terminal_3" unique_id=500000111]
+shape = SubResource("BoxShape3D_growth_3")
+
+[node name="TerminalMesh" parent="Room2/Terminal_3" unique_id=500000112 instance=ExtResource("17_terminal")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("9_pillar_fx")
+
+[node name="InteractArea" type="Area3D" parent="Room2/Terminal_3" unique_id=500000113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/Terminal_3/InteractArea" unique_id=500000114]
+shape = SubResource("SphereShape3D_interact")
+
+[node name="PromptLabel" type="Label3D" parent="Room2/Terminal_3" unique_id=500000115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+text = "[E] Access Terminal"
+font_size = 20
+modulate = Color(0.3, 1, 0.7, 1)
+
+[node name="ScreenLight" type="OmniLight3D" parent="Room2/Terminal_3" unique_id=500000116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.3)
+light_color = Color(0.1, 0.9, 0.6, 1)
+light_energy = 1.5
+omni_range = 4.0
+
+[node name="OmniLight_R2_C" type="OmniLight3D" parent="Room2" unique_id=500000076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 40)
+light_color = Color(0.3, 0.7, 0.9, 1)
+light_energy = 3.0
+omni_range = 28.0
+
+[node name="OmniLight_R2_N" type="OmniLight3D" parent="Room2" unique_id=500000077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 22)
+light_color = Color(0.55, 0.1, 0.9, 1)
+light_energy = 2.0
+omni_range = 16.0
+
+[node name="OmniLight_R2_Far" type="OmniLight3D" parent="Room2" unique_id=500000078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 58)
+light_color = Color(0.9, 0.4, 0.05, 1)
+light_energy = 2.0
+omni_range = 16.0
 
 [node name="DeathScreen" parent="." unique_id=38676934 instance=ExtResource("4_death")]
 

@@ -39,8 +39,8 @@ var _camera_zoom: float = 6.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	# Prevent the spring arm from colliding with Litta herself.
 	camera_arm.add_excluded_object(get_rid())
+	add_to_group("player")
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
