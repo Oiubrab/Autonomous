@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://qg8ggv0xbk5k" path="res://assets/environment/floor_growth.glb" id="12_floor_growth"]
 [ext_resource type="Texture2D" uid="uid://bv3by6dabuheu" path="res://assets/environment/floor_bio_texture.png" id="13_floor_tex"]
 [ext_resource type="Texture2D" uid="uid://ckxyhga1hj5qb" path="res://assets/environment/wall_bio_texture.png" id="14_wall_tex"]
-[ext_resource type="PackedScene" path="res://assets/environment/door_arch.glb" id="15_door_arch"]
+[ext_resource type="PackedScene" uid="uid://cbd31fv6vm4io" path="res://assets/environment/door_arch.glb" id="15_door_arch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
 radius = 0.4
@@ -32,16 +32,22 @@ metallic = 0.05
 roughness = 0.92
 uv1_scale = Vector3(4, 4, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
-size = Vector3(30, 6, 0.4)
+[sub_resource type="BoxShape3D" id="BoxShape3D_roof"]
+size = Vector3(30, 0.4, 30)
 
-[sub_resource type="BoxMesh" id="BoxMesh_wall"]
-size = Vector3(30, 6, 0.4)
+[sub_resource type="BoxMesh" id="BoxMesh_roof"]
+size = Vector3(30, 0.4, 30)
 
 [sub_resource type="StandardMaterial3D" id="Material_wall"]
 albedo_texture = ExtResource("14_wall_tex")
 roughness = 0.95
 uv1_scale = Vector3(10, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
+size = Vector3(30, 6, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(30, 6, 0.4)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pillar"]
 height = 2.8579712
@@ -51,17 +57,29 @@ radius = 0.7963867
 height = 6.0
 radius = 1.5
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_conduit"]
-size = Vector3(3.8950806, 3.5129395, 1.6573486)
+[sub_resource type="BoxShape3D" id="BoxShape3D_conduit_n"]
+size = Vector3(3.8950806, 3.4123535, 1.9691772)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_growth"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_door"]
+size = Vector3(4.4025345, 4.6724854, 2.108612)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_conduit_w"]
+size = Vector3(3.8950806, 3.4123535, 1.9691772)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_conduit_e"]
+size = Vector3(3.8950806, 3.4123535, 1.9691772)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_growth_1"]
 size = Vector3(1.9802246, 1.7389679, 2.9243164)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_roof"]
-size = Vector3(30, 0.4, 30)
+[sub_resource type="BoxShape3D" id="BoxShape3D_growth_2"]
+size = Vector3(1.9802246, 1.7389679, 2.9243164)
 
-[sub_resource type="BoxMesh" id="BoxMesh_roof"]
-size = Vector3(30, 0.4, 30)
+[sub_resource type="BoxShape3D" id="BoxShape3D_growth_3"]
+size = Vector3(1.9802246, 1.7389679, 2.9243164)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_growth_4"]
+size = Vector3(1.9802246, 1.7389679, 2.9243164)
 
 [sub_resource type="Environment" id="Environment_world"]
 background_mode = 1
@@ -91,7 +109,6 @@ script = ExtResource("7_model")
 [node name="CameraArm" type="SpringArm3D" parent="Litta" unique_id=1010897057]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 spring_length = 6.0
-collision_mask = 1
 
 [node name="Camera3D" type="Camera3D" parent="Litta/CameraArm" unique_id=348177014]
 
@@ -234,7 +251,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 2, -12)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/WallConduit_N" unique_id=500000008]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06917769, -0.16333008, 1.988658)
-shape = SubResource("BoxShape3D_conduit")
+shape = SubResource("BoxShape3D_conduit_n")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_N" unique_id=957138109 instance=ExtResource("11_conduit")]
 transform = Transform3D(-1.9991094, 0, 0.059681438, 0, 2, 0, -0.059681438, 0, -1.9991094, 0, 0, 2.0896292)
@@ -244,17 +261,18 @@ script = ExtResource("9_pillar_fx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.6)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/DoorArch" unique_id=500000010]
-shape = SubResource("BoxShape3D_conduit")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.077732086, 2.3394954, -0.1893053)
+shape = SubResource("BoxShape3D_door")
 
 [node name="BiomeMesh" parent="Arena/Decor/DoorArch" unique_id=1635882585 instance=ExtResource("15_door_arch")]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 2.3559875, -0.0071849823)
 script = ExtResource("9_pillar_fx")
 
 [node name="WallConduit_W" type="StaticBody3D" parent="Arena/Decor" unique_id=500000011]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -14.099467, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/WallConduit_W" unique_id=500000012]
-shape = SubResource("BoxShape3D_conduit")
+shape = SubResource("BoxShape3D_conduit_w")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_W" unique_id=1373272265 instance=ExtResource("11_conduit")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -264,7 +282,7 @@ script = ExtResource("9_pillar_fx")
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 14.0474415, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/WallConduit_E" unique_id=500000014]
-shape = SubResource("BoxShape3D_conduit")
+shape = SubResource("BoxShape3D_conduit_e")
 
 [node name="BiomeMesh" parent="Arena/Decor/WallConduit_E" unique_id=406930901 instance=ExtResource("11_conduit")]
 transform = Transform3D(-1.9999747, 0, 0.010052941, 0, 2, 0, -0.010052941, 0, -1.9999747, 0, 0.01903963, -0.024445534)
@@ -275,7 +293,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.5, 3)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_1" unique_id=500000016]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49855292, 0)
-shape = SubResource("BoxShape3D_growth")
+shape = SubResource("BoxShape3D_growth_1")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_1" unique_id=1260972152 instance=ExtResource("12_floor_growth")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.5244175, 0)
@@ -286,7 +304,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4, 1.5, -3)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_2" unique_id=500000018]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15698242, -0.5318959, 0.02709961)
-shape = SubResource("BoxShape3D_growth")
+shape = SubResource("BoxShape3D_growth_2")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_2" unique_id=186961472 instance=ExtResource("12_floor_growth")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.04074931, -0.5829818, -0.012910843)
@@ -297,7 +315,7 @@ transform = Transform3D(0.707, 0, -0.707, 0, 1, 0, 0.707, 0, 0.707, -3, 1.5, 4)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_3" unique_id=500000020]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.099731445, -0.55978394, -0.106933594)
-shape = SubResource("BoxShape3D_growth")
+shape = SubResource("BoxShape3D_growth_3")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_3" unique_id=204089429 instance=ExtResource("12_floor_growth")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.04699588, -0.5570226, -0.18756628)
@@ -308,7 +326,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5, 1.5, -4)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/FloorGrowth_4" unique_id=500000022]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45461798, 0)
-shape = SubResource("BoxShape3D_growth")
+shape = SubResource("BoxShape3D_growth_4")
 
 [node name="BiomeMesh" parent="Arena/Decor/FloorGrowth_4" unique_id=838883441 instance=ExtResource("12_floor_growth")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.47146988, 0)
