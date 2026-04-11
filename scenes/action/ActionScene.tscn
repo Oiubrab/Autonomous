@@ -19,6 +19,9 @@
 [ext_resource type="PackedScene" uid="uid://dblc0ddxs1yp5" path="res://assets/environment/terminal.glb" id="17_terminal"]
 [ext_resource type="Script" uid="uid://0yjaji5srwsu" path="res://scenes/action/Door.gd" id="18_door"]
 [ext_resource type="Script" uid="uid://cfa4bm1kvbtgy" path="res://scenes/action/Terminal.gd" id="19_terminal_script"]
+[ext_resource type="Script" uid="uid://bup637a0kmxlq" path="res://scenes/action/ExitDoor.gd" id="99_exit_door"]
+[ext_resource type="PackedScene" path="res://scenes/action/ThrenssWorker.tscn" id="99_threnss"]
+[ext_resource type="PackedScene" uid="uid://btbo8k0ju7esa" path="res://assets/environment/exit_door_arch.glb" id="100_exit_arch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_litta"]
 radius = 0.4
@@ -159,11 +162,32 @@ size = Vector3(50, 10, 0.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_r2_right"]
 size = Vector3(50, 10, 0.4)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_r2_far"]
-size = Vector3(30, 10, 0.4)
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit_far_L"]
+size = Vector3(12, 10, 0.4)
 
-[sub_resource type="BoxMesh" id="BoxMesh_r2_far"]
-size = Vector3(30, 10, 0.4)
+[sub_resource type="BoxMesh" id="BoxMesh_exit_far_L"]
+size = Vector3(12, 10, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit_far_R"]
+size = Vector3(12, 10, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_exit_far_R"]
+size = Vector3(12, 10, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit_arch_L"]
+size = Vector3(1.8, 10, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit_arch_R"]
+size = Vector3(1.8, 10, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit_arch_top"]
+size = Vector3(6, 1.5, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit_panel"]
+size = Vector3(5, 7, 0.4)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_exit_interact"]
+radius = 3.0
 
 [node name="ActionScene" type="Node3D" unique_id=951435807]
 script = ExtResource("1_scene")
@@ -388,7 +412,7 @@ transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 2.3559875, -0.007184
 script = ExtResource("9_pillar_fx")
 
 [node name="DoorPanel" type="AnimatableBody3D" parent="Arena/Decor/DoorArch" unique_id=500000080]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0973713, 0.42422962)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 2.0973713, 0.42422962)
 
 [node name="PanelCollision" type="CollisionShape3D" parent="Arena/Decor/DoorArch/DoorPanel" unique_id=500000081]
 shape = SubResource("BoxShape3D_door_panel")
@@ -402,12 +426,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Decor/DoorArch/InteractArea" unique_id=500000084]
 shape = SubResource("SphereShape3D_interact")
-
-[node name="PromptLabel" type="Label3D" parent="Arena/Decor/DoorArch" unique_id=500000085]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
-modulate = Color(0.8, 0.9, 1, 1)
-text = "[E] Open / Close"
-font_size = 24
 
 [node name="WallConduit_W" type="StaticBody3D" parent="Arena/Decor" unique_id=500000011]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -14.099467, 2, 0)
@@ -571,17 +589,70 @@ surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
 uv_scale = Vector2(17, 3)
 
-[node name="FarWall" type="StaticBody3D" parent="Room2" unique_id=500000073]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 65)
+[node name="FarWall_L" type="StaticBody3D" parent="Room2" unique_id=1768744589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 5, 65)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/FarWall" unique_id=500000074]
-shape = SubResource("BoxShape3D_r2_far")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/FarWall_L" unique_id=1961278912]
+shape = SubResource("BoxShape3D_exit_far_L")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/FarWall" unique_id=500000075]
-mesh = SubResource("BoxMesh_r2_far")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/FarWall_L" unique_id=83687122]
+mesh = SubResource("BoxMesh_exit_far_L")
 surface_material_override/0 = SubResource("Material_wall")
 script = ExtResource("9_pillar_fx")
-uv_scale = Vector2(10, 3)
+uv_scale = Vector2(4, 3)
+
+[node name="FarWall_R" type="StaticBody3D" parent="Room2" unique_id=1274142377]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 5, 65)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/FarWall_R" unique_id=1400482419]
+shape = SubResource("BoxShape3D_exit_far_R")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Room2/FarWall_R" unique_id=919531703]
+mesh = SubResource("BoxMesh_exit_far_R")
+surface_material_override/0 = SubResource("Material_wall")
+script = ExtResource("9_pillar_fx")
+uv_scale = Vector2(4, 3)
+
+[node name="ExitDoorArch" type="Node3D" parent="Room2" unique_id=1748084712]
+script = ExtResource("99_exit_door")
+
+[node name="ArchFrame" type="StaticBody3D" parent="Room2/ExitDoorArch" unique_id=587721822]
+
+[node name="CollisionLeft" type="CollisionShape3D" parent="Room2/ExitDoorArch/ArchFrame" unique_id=87035080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 5, 65)
+shape = SubResource("BoxShape3D_exit_arch_L")
+
+[node name="CollisionRight" type="CollisionShape3D" parent="Room2/ExitDoorArch/ArchFrame" unique_id=876011540]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 5, 65)
+shape = SubResource("BoxShape3D_exit_arch_R")
+
+[node name="CollisionTop" type="CollisionShape3D" parent="Room2/ExitDoorArch/ArchFrame" unique_id=1123648908]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.25, 65)
+shape = SubResource("BoxShape3D_exit_arch_top")
+
+[node name="ArchMesh" parent="Room2/ExitDoorArch/ArchFrame" unique_id=269742122 instance=ExtResource("100_exit_arch")]
+transform = Transform3D(4, 0, 0, 0, 8, 0, 0, 0, 1, 0, 4.5833445, 65)
+
+[node name="DoorPanel" type="AnimatableBody3D" parent="Room2/ExitDoorArch" unique_id=562972126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 65)
+
+[node name="PanelCollision" type="CollisionShape3D" parent="Room2/ExitDoorArch/DoorPanel" unique_id=1717588637]
+shape = SubResource("BoxShape3D_exit_panel")
+
+[node name="PanelMesh" parent="Room2/ExitDoorArch/DoorPanel" unique_id=879784591 instance=ExtResource("16_door_panel")]
+
+[node name="InteractArea" type="Area3D" parent="Room2/ExitDoorArch" unique_id=1895851534]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room2/ExitDoorArch/InteractArea" unique_id=161659431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 63)
+shape = SubResource("SphereShape3D_exit_interact")
+
+[node name="PromptLabel" type="Label3D" parent="Room2/ExitDoorArch" unique_id=516785539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 62)
+billboard = 1
+modulate = Color(0.3, 1, 0.7, 1)
+text = "[E] Exit"
+font_size = 20
 
 [node name="Terminal_1" type="StaticBody3D" parent="Room2" unique_id=500000090]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 35)
@@ -603,6 +674,7 @@ shape = SubResource("SphereShape3D_interact")
 
 [node name="PromptLabel" type="Label3D" parent="Room2/Terminal_1" unique_id=500000095]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+billboard = 1
 modulate = Color(0.3, 1, 0.7, 1)
 text = "[E] Access Terminal"
 font_size = 20
@@ -633,6 +705,7 @@ shape = SubResource("SphereShape3D_interact")
 
 [node name="PromptLabel" type="Label3D" parent="Room2/Terminal_2" unique_id=500000105]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+billboard = 1
 modulate = Color(0.3, 1, 0.7, 1)
 text = "[E] Access Terminal"
 font_size = 20
@@ -663,6 +736,7 @@ shape = SubResource("SphereShape3D_interact")
 
 [node name="PromptLabel" type="Label3D" parent="Room2/Terminal_3" unique_id=500000115]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+billboard = 1
 modulate = Color(0.3, 1, 0.7, 1)
 text = "[E] Access Terminal"
 font_size = 20
@@ -690,6 +764,41 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 58)
 light_color = Color(0.9, 0.4, 0.05, 1)
 light_energy = 2.0
 omni_range = 16.0
+
+[node name="WorkerWaypoints" type="Node3D" parent="." unique_id=1404067411]
+
+[node name="WP_Arena_A" type="Node3D" parent="WorkerWaypoints" unique_id=1756671460]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="WP_Arena_B" type="Node3D" parent="WorkerWaypoints" unique_id=1900443548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="WP_Arena_C" type="Node3D" parent="WorkerWaypoints" unique_id=721895941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="WP_Room2_A" type="Node3D" parent="WorkerWaypoints" unique_id=154356739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 28)
+
+[node name="WP_Room2_B" type="Node3D" parent="WorkerWaypoints" unique_id=1409747210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 28)
+
+[node name="WP_Room2_C" type="Node3D" parent="WorkerWaypoints" unique_id=1547114613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+
+[node name="WP_Room2_D" type="Node3D" parent="WorkerWaypoints" unique_id=122300561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 55)
+
+[node name="ThrenssWorker_1" parent="." unique_id=608136518 instance=ExtResource("99_threnss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+waypoints = Array[NodePath]([NodePath("../WorkerWaypoints/WP_Arena_A"), NodePath("../WorkerWaypoints/WP_Arena_B"), NodePath("../WorkerWaypoints/WP_Arena_C")])
+
+[node name="ThrenssWorker_2" parent="." unique_id=2143530661 instance=ExtResource("99_threnss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 30)
+waypoints = Array[NodePath]([NodePath("../WorkerWaypoints/WP_Room2_A"), NodePath("../WorkerWaypoints/WP_Room2_B"), NodePath("../WorkerWaypoints/WP_Room2_C")])
+
+[node name="ThrenssWorker_3" parent="." unique_id=837293517 instance=ExtResource("99_threnss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 45)
+waypoints = Array[NodePath]([NodePath("../WorkerWaypoints/WP_Room2_C"), NodePath("../WorkerWaypoints/WP_Room2_D"), NodePath("../WorkerWaypoints/WP_Room2_A")])
 
 [node name="DeathScreen" parent="." unique_id=38676934 instance=ExtResource("4_death")]
 

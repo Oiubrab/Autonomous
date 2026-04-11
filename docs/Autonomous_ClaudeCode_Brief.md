@@ -363,6 +363,30 @@ The bioluminescent veins in assets should read across this range — a pillar mi
 
 ---
 
+## Godot Skeleton Animation — Critical Notes
+
+### Always preserve bone rest pose when animating procedurally
+
+`Skeleton3D.set_bone_pose_rotation(idx, quat)` **overwrites** the bone's current pose — it does not compose on top of the rest pose. Setting a bone to `Quaternion.from_euler(Vector3.ZERO)` (identity) does NOT mean "no change" — it resets the bone to a neutral orientation which will look broken if the rest pose has non-trivial rotations (which it almost always does when imported from Blender).
+
+**Correct pattern:**
+```gdscript
+# At _ready(): cache the rest pose for every bone you will animate
+_base_rot[bone_name] = _skel.get_bone_pose_rotation(idx)
+
+# At runtime: compose animation delta ON TOP of the rest pose
+var base: Quaternion = _base_rot[bone_name]
+_skel.set_bone_pose_rotation(idx, base * Quaternion.from_euler(delta_euler))
+```
+
+### Bone local axes are not predictable from inspection
+
+A bone's local X/Y/Z axes depend entirely on how the armature was built in Blender. They cannot be guessed from the bone name or hierarchy. The only reliable way to find which local axis produces a given world-space motion is empirically: apply a small rotation on one axis at a time and observe the result in-engine. For threnss3.glb, the confirmed axis mapping is:
+- **Tarsal bones**: local Z = forward/back swing
+- **Lower/Upper leg bones**: local Z = forward/back swing (same, confirmed separately)
+
+---
+
 ## Things to Avoid
 
 - **Don't build a full game — build a vertical slice.** The slice proves the concept. Everything else follows.

@@ -1,0 +1,477 @@
+[gd_scene format=3 uid="uid://bptvaagtwcjya"]
+
+[ext_resource type="Script" uid="uid://cf450u7ewt52k" path="res://scenes/outdoor/OutdoorScene.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bbtx8bk6qfleh" path="res://assets/environment/outdoor/tree.glb" id="2_tree"]
+[ext_resource type="PackedScene" uid="uid://r4gyadwxy3jp" path="res://assets/environment/outdoor/plant.glb" id="3_plant"]
+[ext_resource type="PackedScene" uid="uid://c2hmcv8ufco14" path="res://assets/environment/outdoor/rock.glb" id="4_rock"]
+[ext_resource type="Script" uid="uid://dkcqyourpbj51" path="res://scenes/action/Litta.gd" id="5_litta"]
+[ext_resource type="Script" uid="uid://vh5icup5trva" path="res://scenes/action/LittaAutonomy.gd" id="6_autonomy"]
+[ext_resource type="Script" uid="uid://bfq15rmpnkf5p" path="res://scenes/action/LittaModel.gd" id="7_model"]
+[ext_resource type="PackedScene" path="res://ui/DeathScreen.tscn" id="8_death"]
+[ext_resource type="PackedScene" path="res://ui/DebugOverlay.tscn" id="9_debug"]
+[ext_resource type="PackedScene" path="res://ui/ControlsOverlay.tscn" id="10_controls"]
+[ext_resource type="PackedScene" uid="uid://btbo8k0ju7esa" path="res://assets/environment/exit_door_arch.glb" id="17_door_arch"]
+[ext_resource type="Texture2D" uid="uid://bv3by6dabuheu" path="res://assets/environment/wall_bio_texture.png" id="18_wall_tex"]
+[ext_resource type="Shader" path="res://shaders/clouds.gdshader" id="19_cloud_shader"]
+
+[sub_resource type="Environment" id="1_env"]
+background_mode = 1
+background_color = Color(0.01, 0.012, 0.04, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.17, 0.24, 1)
+ambient_light_energy = 0.35
+glow_enabled = true
+glow_bloom = 0.05
+glow_hdr_threshold = 1.8
+fog_enabled = true
+fog_light_color = Color(0.04, 0.05, 0.09, 1)
+fog_light_energy = 0.3
+fog_density = 0.008
+fog_aerial_perspective = 0.3
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.03
+volumetric_fog_albedo = Color(0.75, 0.82, 0.8, 1)
+volumetric_fog_ambient_inject = 0.05
+volumetric_fog_sky_affect = 0.2
+volumetric_fog_length = 200.0
+volumetric_fog_detail_spread = 2.0
+
+[sub_resource type="HeightMapShape3D" id="4_ground_col"]
+
+[sub_resource type="FogMaterial" id="fog_pool_mat"]
+density = 0.4
+albedo = Color(0.72, 0.82, 0.78, 1)
+height_falloff = 2.5
+edge_fade = 0.18
+
+[sub_resource type="FogMaterial" id="fog_ground_mat"]
+density = 0.06
+albedo = Color(0.65, 0.75, 0.72, 1)
+height_falloff = 1.2
+edge_fade = 0.3
+
+[sub_resource type="PlaneMesh" id="cloud_plane_1"]
+size = Vector2(600, 600)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="ShaderMaterial" id="cloud_mat_1"]
+shader = ExtResource("19_cloud_shader")
+shader_parameter/plane_size = 600.0
+shader_parameter/cloud_speed = 0.006
+shader_parameter/cloud_scale = 0.007
+shader_parameter/cloud_offset = 0.0
+shader_parameter/coverage = 0.35
+shader_parameter/cloud_color = Color(0.10, 0.11, 0.17, 1.0)
+
+[sub_resource type="PlaneMesh" id="cloud_plane_2"]
+size = Vector2(700, 700)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="ShaderMaterial" id="cloud_mat_2"]
+shader = ExtResource("19_cloud_shader")
+shader_parameter/plane_size = 700.0
+shader_parameter/cloud_speed = 0.004
+shader_parameter/cloud_scale = 0.005
+shader_parameter/cloud_offset = 4.7
+shader_parameter/coverage = 0.32
+shader_parameter/cloud_color = Color(0.07, 0.08, 0.13, 1.0)
+
+[sub_resource type="PlaneMesh" id="5_water"]
+size = Vector2(55, 38)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="BoxShape3D" id="8_front_L_col"]
+size = Vector3(17, 35, 1)
+
+[sub_resource type="BoxMesh" id="9_front_L_mesh"]
+size = Vector3(17, 35, 1)
+
+[sub_resource type="StandardMaterial3D" id="7_wall_mat"]
+albedo_texture = ExtResource("18_wall_tex")
+metallic = 0.08
+roughness = 0.88
+uv1_scale = Vector3(6, 3, 1)
+
+[sub_resource type="BoxShape3D" id="10_front_R_col"]
+size = Vector3(17, 35, 1)
+
+[sub_resource type="BoxMesh" id="11_front_R_mesh"]
+size = Vector3(17, 35, 1)
+
+[sub_resource type="BoxShape3D" id="12_lintel_col"]
+size = Vector3(6, 27, 1)
+
+[sub_resource type="BoxMesh" id="13_lintel_mesh"]
+size = Vector3(6, 27, 1)
+
+[sub_resource type="BoxShape3D" id="20_side_col"]
+size = Vector3(1, 35, 35)
+
+[sub_resource type="BoxMesh" id="21_side_mesh"]
+size = Vector3(1, 35, 35)
+
+[sub_resource type="BoxShape3D" id="22_back_col"]
+size = Vector3(40, 35, 1)
+
+[sub_resource type="BoxMesh" id="23_back_mesh"]
+size = Vector3(40, 35, 1)
+
+[sub_resource type="BoxShape3D" id="24_roof_col"]
+size = Vector3(40, 1, 35)
+
+[sub_resource type="BoxMesh" id="25_roof_mesh"]
+size = Vector3(40, 1, 35)
+
+[sub_resource type="SphereMesh" id="moon_mesh"]
+radius = 18.0
+height = 36.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="moon_mat"]
+shading_mode = 0
+albedo_color = Color(1, 0.97, 0.88, 1)
+
+[sub_resource type="SphereMesh" id="halo_mesh"]
+radius = 26.0
+height = 52.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="halo_mat"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.7, 0.75, 1, 0.08)
+
+[sub_resource type="CapsuleShape3D" id="6_litta_col"]
+radius = 0.4
+height = 1.8
+
+[node name="OutdoorScene" type="Node3D" unique_id=1429625917]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=913973021]
+environment = SubResource("1_env")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=495178167]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground" unique_id=1032732366]
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground" unique_id=902974694]
+shape = SubResource("4_ground_col")
+
+[node name="SwampPool" type="MeshInstance3D" parent="." unique_id=411240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.02, 14)
+mesh = SubResource("5_water")
+
+[node name="SwampPool2" type="MeshInstance3D" parent="." unique_id=197509177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.02, 28)
+mesh = SubResource("5_water")
+
+[node name="SwampPool3" type="MeshInstance3D" parent="." unique_id=1735519336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.02, 45)
+mesh = SubResource("5_water")
+
+[node name="Mist" type="Node3D" parent="."]
+
+[node name="GroundMist" type="FogVolume" parent="Mist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 30)
+size = Vector3(300, 3, 300)
+material = SubResource("fog_ground_mat")
+
+[node name="PoolMist1" type="FogVolume" parent="Mist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.8, 14)
+size = Vector3(50, 2.5, 35)
+material = SubResource("fog_pool_mat")
+
+[node name="PoolMist2" type="FogVolume" parent="Mist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.8, 28)
+size = Vector3(50, 2.5, 35)
+material = SubResource("fog_pool_mat")
+
+[node name="PoolMist3" type="FogVolume" parent="Mist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.8, 45)
+size = Vector3(50, 2.5, 35)
+material = SubResource("fog_pool_mat")
+
+[node name="Tower" type="Node3D" parent="." unique_id=1157887175]
+
+[node name="FrontLeft" type="StaticBody3D" parent="Tower" unique_id=10762423]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, 17.5, 0)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/FrontLeft" unique_id=103858173]
+shape = SubResource("8_front_L_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/FrontLeft" unique_id=2027416186]
+mesh = SubResource("9_front_L_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="FrontRight" type="StaticBody3D" parent="Tower" unique_id=443139769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 17.5, 0)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/FrontRight" unique_id=1223943328]
+shape = SubResource("10_front_R_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/FrontRight" unique_id=500208567]
+mesh = SubResource("11_front_R_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="Lintel" type="StaticBody3D" parent="Tower" unique_id=2012336826]
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 0, 20.156414, 0)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/Lintel" unique_id=1625369952]
+shape = SubResource("12_lintel_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/Lintel" unique_id=1113462531]
+mesh = SubResource("13_lintel_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="LeftWall" type="StaticBody3D" parent="Tower" unique_id=1413067189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 17.5, -17.5)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/LeftWall" unique_id=1159921519]
+shape = SubResource("20_side_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/LeftWall" unique_id=1444067649]
+mesh = SubResource("21_side_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="RightWall" type="StaticBody3D" parent="Tower" unique_id=2041643625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 17.5, -17.5)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/RightWall" unique_id=783332794]
+shape = SubResource("20_side_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/RightWall" unique_id=1241592662]
+mesh = SubResource("21_side_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="BackWall" type="StaticBody3D" parent="Tower" unique_id=107671577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.5, -35)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/BackWall" unique_id=1362941959]
+shape = SubResource("22_back_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/BackWall" unique_id=201030515]
+mesh = SubResource("23_back_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="Roof" type="StaticBody3D" parent="Tower" unique_id=2054521610]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35, -17.5)
+
+[node name="Col" type="CollisionShape3D" parent="Tower/Roof" unique_id=1264116869]
+shape = SubResource("24_roof_col")
+
+[node name="Mesh" type="MeshInstance3D" parent="Tower/Roof" unique_id=1806127445]
+mesh = SubResource("25_roof_mesh")
+surface_material_override/0 = SubResource("7_wall_mat")
+
+[node name="DoorArch" parent="Tower" unique_id=378406336 instance=ExtResource("17_door_arch")]
+transform = Transform3D(-4, 0, -3.496911e-07, 0, 4, 0, 3.496911e-07, 0, -4, 0, 2.874681, 0)
+
+[node name="Trees" type="Node3D" parent="." unique_id=627107836]
+
+[node name="Tree_1" parent="Trees" unique_id=2102711287 instance=ExtResource("2_tree")]
+transform = Transform3D(6.0, 0, 0, 0, 6.0, 0, 0, 0, 6.0, -10, 0, 8)
+
+[node name="Tree_2" parent="Trees" unique_id=223639226 instance=ExtResource("2_tree")]
+transform = Transform3D(7.0, 0, 0, 0, 7.0, 0, 0, 0, 7.0, 14, 0, 10)
+
+[node name="Tree_3" parent="Trees" unique_id=1851445274 instance=ExtResource("2_tree")]
+transform = Transform3D(5.5, 0, 0, 0, 5.5, 0, 0, 0, 5.5, -5, 0, 22)
+
+[node name="Tree_4" parent="Trees" unique_id=1267004915 instance=ExtResource("2_tree")]
+transform = Transform3D(6.5, 0, 0, 0, 6.5, 0, 0, 0, 6.5, 24, 0, 18)
+
+[node name="Tree_5" parent="Trees" unique_id=1651875105 instance=ExtResource("2_tree")]
+transform = Transform3D(8.0, 0, 0, 0, 8.0, 0, 0, 0, 8.0, -22, 0, 14)
+
+[node name="Tree_6" parent="Trees" unique_id=661228987 instance=ExtResource("2_tree")]
+transform = Transform3D(5.8, 0, 0, 0, 5.8, 0, 0, 0, 5.8, 6, 0, 38)
+
+[node name="Tree_7" parent="Trees" unique_id=1808749594 instance=ExtResource("2_tree")]
+transform = Transform3D(7.2, 0, 0, 0, 7.2, 0, 0, 0, 7.2, -30, 0, 26)
+
+[node name="Tree_8" parent="Trees" unique_id=487530331 instance=ExtResource("2_tree")]
+transform = Transform3D(6.8, 0, 0, 0, 6.8, 0, 0, 0, 6.8, 32, 0, 8)
+
+[node name="Tree_9" parent="Trees" unique_id=1149551382 instance=ExtResource("2_tree")]
+transform = Transform3D(7.5, 0, 0, 0, 7.5, 0, 0, 0, 7.5, -16, 0, 40)
+
+[node name="Tree_10" parent="Trees" unique_id=462649288 instance=ExtResource("2_tree")]
+transform = Transform3D(6.2, 0, 0, 0, 6.2, 0, 0, 0, 6.2, 40, 0, 30)
+
+[node name="Tree_11" parent="Trees" unique_id=534303002 instance=ExtResource("2_tree")]
+transform = Transform3D(5.2, 0, 0, 0, 5.2, 0, 0, 0, 5.2, -40, 0, 18)
+
+[node name="Tree_12" parent="Trees" unique_id=326908258 instance=ExtResource("2_tree")]
+transform = Transform3D(8.0, 0, 0, 0, 8.0, 0, 0, 0, 8.0, 18, 0, 55)
+
+[node name="Tree_13" parent="Trees" unique_id=1640186641 instance=ExtResource("2_tree")]
+transform = Transform3D(6.4, 0, 0, 0, 6.4, 0, 0, 0, 6.4, -28, 0, 50)
+
+[node name="Tree_14" parent="Trees" unique_id=186136393 instance=ExtResource("2_tree")]
+transform = Transform3D(7.0, 0, 0, 0, 7.0, 0, 0, 0, 7.0, 50, 0, 20)
+
+[node name="Tree_15" parent="Trees" unique_id=1633062731 instance=ExtResource("2_tree")]
+transform = Transform3D(5.6, 0, 0, 0, 5.6, 0, 0, 0, 5.6, -12, 0, 62)
+
+[node name="Plants" type="Node3D" parent="." unique_id=1423064854]
+
+[node name="Plant_1" parent="Plants" unique_id=506119950 instance=ExtResource("3_plant")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5, 0, 9)
+
+[node name="Plant_2" parent="Plants" unique_id=1484106709 instance=ExtResource("3_plant")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -8, 0, 16)
+
+[node name="Plant_3" parent="Plants" unique_id=1203116231 instance=ExtResource("3_plant")]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 18, 0, 24)
+
+[node name="Plant_4" parent="Plants" unique_id=1671951363 instance=ExtResource("3_plant")]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, -15, 0, 10)
+
+[node name="Plant_5" parent="Plants" unique_id=1900158476 instance=ExtResource("3_plant")]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 26, 0, 14)
+
+[node name="Plant_6" parent="Plants" unique_id=201741676 instance=ExtResource("3_plant")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -24, 0, 34)
+
+[node name="Plant_7" parent="Plants" unique_id=918555873 instance=ExtResource("3_plant")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 10, 0, 30)
+
+[node name="Plant_8" parent="Plants" unique_id=755876909 instance=ExtResource("3_plant")]
+transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, -6, 0, 44)
+
+[node name="Plant_9" parent="Plants" unique_id=899602777 instance=ExtResource("3_plant")]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 36, 0, 40)
+
+[node name="Plant_10" parent="Plants" unique_id=1321186907 instance=ExtResource("3_plant")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -35, 0, 22)
+
+[node name="Rocks" type="Node3D" parent="." unique_id=1265872089]
+
+[node name="Rock_1" parent="Rocks" unique_id=390227823 instance=ExtResource("4_rock")]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 8, 0, 12)
+
+[node name="Rock_2" parent="Rocks" unique_id=918534861 instance=ExtResource("4_rock")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -12, 0, 24)
+
+[node name="Rock_3" parent="Rocks" unique_id=1982865870 instance=ExtResource("4_rock")]
+transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 22, 0, 36)
+
+[node name="Rock_4" parent="Rocks" unique_id=2130622808 instance=ExtResource("4_rock")]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, -26, 0, 18)
+
+[node name="Rock_5" parent="Rocks" unique_id=920917898 instance=ExtResource("4_rock")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 44, 0, 12)
+
+[node name="Rock_6" parent="Rocks" unique_id=320705307 instance=ExtResource("4_rock")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -38, 0, 42)
+
+[node name="Clouds" type="Node3D" parent="."]
+
+[node name="CloudLayer1" type="MeshInstance3D" parent="Clouds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, 0)
+mesh = SubResource("cloud_plane_1")
+surface_material_override/0 = SubResource("cloud_mat_1")
+cast_shadow = 0
+
+[node name="CloudLayer2" type="MeshInstance3D" parent="Clouds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 95, -20)
+mesh = SubResource("cloud_plane_2")
+surface_material_override/0 = SubResource("cloud_mat_2")
+cast_shadow = 0
+
+[node name="Lighting" type="Node3D" parent="." unique_id=1486547592]
+
+[node name="MoonLight" type="DirectionalLight3D" parent="Lighting" unique_id=347412753]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 20, 0)
+light_color = Color(0.72, 0.78, 1, 1)
+light_energy = 0.55
+shadow_enabled = true
+shadow_blur = 2.0
+
+[node name="BioGlow_Pool1" type="OmniLight3D" parent="Lighting" unique_id=1441353926]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, 14)
+light_color = Color(0.1, 0.65, 0.55, 1)
+light_energy = 0.8
+omni_range = 6.0
+
+[node name="BioGlow_Pool2" type="OmniLight3D" parent="Lighting" unique_id=201272914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.1, 28)
+light_color = Color(0.15, 0.6, 0.45, 1)
+light_energy = 0.7
+omni_range = 6.0
+
+[node name="BioGlow_Pool3" type="OmniLight3D" parent="Lighting" unique_id=504021301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.1, 45)
+light_color = Color(0.1, 0.55, 0.5, 1)
+light_energy = 0.7
+omni_range = 6.0
+
+[node name="BioGlow_Amber1" type="OmniLight3D" parent="Lighting" unique_id=1015171533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.3, 8)
+light_color = Color(0.7, 0.45, 0.1, 1)
+light_energy = 0.6
+
+[node name="BioGlow_Amber2" type="OmniLight3D" parent="Lighting" unique_id=1523234400]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.3, 26)
+light_color = Color(0.65, 0.4, 0.15, 1)
+light_energy = 0.5
+
+[node name="BioGlow_Violet" type="OmniLight3D" parent="Lighting" unique_id=1185436541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0.3, 32)
+light_color = Color(0.45, 0.2, 0.7, 1)
+light_energy = 0.6
+omni_range = 6.0
+
+[node name="DoorGlow" type="OmniLight3D" parent="Lighting" unique_id=1935570416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2)
+light_color = Color(0.6, 0.7, 0.9, 1)
+light_energy = 2.0
+omni_range = 10.0
+
+[node name="Moon" type="Node3D" parent="Lighting" unique_id=1909804313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -400, 500, -300)
+
+[node name="MoonDisc" type="MeshInstance3D" parent="Lighting/Moon" unique_id=1483875033]
+mesh = SubResource("moon_mesh")
+surface_material_override/0 = SubResource("moon_mat")
+
+[node name="MoonHalo" type="MeshInstance3D" parent="Lighting/Moon" unique_id=822003831]
+mesh = SubResource("halo_mesh")
+surface_material_override/0 = SubResource("halo_mat")
+
+[node name="Litta" type="CharacterBody3D" parent="." unique_id=285285005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 3)
+script = ExtResource("5_litta")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Litta" unique_id=243620528]
+shape = SubResource("6_litta_col")
+
+[node name="LittaModel" type="Node3D" parent="Litta" unique_id=1496089369]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
+script = ExtResource("7_model")
+
+[node name="CameraArm" type="SpringArm3D" parent="Litta" unique_id=2046422598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+spring_length = 6.0
+
+[node name="Camera3D" type="Camera3D" parent="Litta/CameraArm" unique_id=885147946]
+far = 800.0
+
+[node name="LittaAutonomy" type="Node" parent="Litta" unique_id=2098991275]
+script = ExtResource("6_autonomy")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1748853953]
+
+[node name="DeathScreen" parent="UI" unique_id=1952234765 instance=ExtResource("8_death")]
+
+[node name="DebugOverlay" parent="UI" unique_id=152556744 instance=ExtResource("9_debug")]
+
+[node name="ControlsOverlay" parent="UI" unique_id=901623985 instance=ExtResource("10_controls")]

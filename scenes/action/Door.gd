@@ -10,25 +10,23 @@ signal door_closed
 
 @onready var panel: AnimatableBody3D = $DoorPanel
 @onready var interact_area: Area3D = $InteractArea
-@onready var prompt_label: Label3D = $PromptLabel
 
 var _open: bool = false
 var _busy: bool = false
+var _player_nearby: bool = false
 
 func _ready() -> void:
 	interact_area.body_entered.connect(_on_body_entered)
 	interact_area.body_exited.connect(_on_body_exited)
-	prompt_label.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not prompt_label.visible or _busy:
+	if not _player_nearby or _busy:
 		return
 	if event.is_action_pressed("interact"):
 		_toggle()
 
 func _toggle() -> void:
 	_busy = true
-	prompt_label.visible = false
 	var target_y := panel.position.y + (8.0 if not _open else -8.0)
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -43,8 +41,8 @@ func _toggle() -> void:
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		prompt_label.visible = true
+		_player_nearby = true
 
 func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		prompt_label.visible = false
+		_player_nearby = false
