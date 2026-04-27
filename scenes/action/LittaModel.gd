@@ -6,14 +6,14 @@ extends Node3D
 const _DIR = "res://assets/characters/litta/"
 
 const _SOURCES := {
-	"idle":         "Meshy_AI_Icebound_Warrior_biped_Animation_Idle_withSkin.glb",
-	"walk":         "Meshy_AI_Icebound_Warrior_biped_Animation_Walking_withSkin.glb",
-	"run":          "Meshy_AI_Icebound_Warrior_biped_Animation_Running_withSkin.glb",
-	"melee_attack": "Meshy_AI_Icebound_Warrior_biped_Animation_Attack_withSkin.glb",
-	"dead":         "Meshy_AI_Icebound_Warrior_biped_Animation_Dead_withSkin.glb",
-	"jump":         "Meshy_AI_Animation_Regular_Jump_withSkin.glb",
-	"run_jump":     "Meshy_AI_Animation_Jump_Over_Obstacle_2_withSkin.glb",
-	"shoot":        "Meshy_AI_Icebound_Warrior_biped_Animation_Run_and_Shoot_withSkin.glb",
+	"idle":         "litta_idle.glb",
+	"walk":         "litta_walk.glb",
+	"run":          "litta_run.glb",
+	"melee_attack": "litta_melee_attack.glb",
+	"dead":         "litta_dead.glb",
+	"jump":         "litta_jump.glb",
+	"run_jump":     "litta_run_jump.glb",
+	"shoot":        "litta_shoot.glb",
 }
 
 var _player: AnimationPlayer
