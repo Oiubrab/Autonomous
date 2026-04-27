@@ -21,9 +21,16 @@ var dodge_direction: Vector3 = Vector3.ZERO
 var is_dead: bool = false
 var _jumped_from_run: bool = false
 
+enum WeaponMode { BLADE, GUN }
+
+const _WeaponHolder = preload("res://scenes/action/WeaponHolder.gd")
+
 @onready var camera_arm: SpringArm3D = $CameraArm
 @onready var camera: Camera3D = $CameraArm/Camera3D
 @onready var model: Node3D = $LittaModel
+
+var weapon_mode: WeaponMode = WeaponMode.BLADE
+var _weapon_holder: Node
 
 # Camera orbit state
 var _camera_pitch: float = -0.3
@@ -41,6 +48,12 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera_arm.add_excluded_object(get_rid())
 	add_to_group("player")
+	_setup_weapons()
+
+func _setup_weapons() -> void:
+	_weapon_holder = _WeaponHolder.new()
+	add_child(_weapon_holder)
+	_weapon_holder.setup(model.get_skeleton())
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -74,6 +87,7 @@ func _physics_process(delta: float) -> void:
 		_check_jump_input()
 		_check_dodge_input()
 		_check_attack_input()
+		_check_weapon_switch_input()
 
 	_update_camera()
 	move_and_slide()
@@ -124,7 +138,17 @@ func _check_dodge_input() -> void:
 
 func _check_attack_input() -> void:
 	if Input.is_action_just_pressed("attack"):
-		model.play_once("attack")
+		var anim := "melee_attack" if weapon_mode == WeaponMode.BLADE else "shoot"
+		model.play_once(anim)
+
+func _check_weapon_switch_input() -> void:
+	if Input.is_action_just_pressed("switch_weapon"):
+		if weapon_mode == WeaponMode.BLADE:
+			weapon_mode = WeaponMode.GUN
+			_weapon_holder.show_gun()
+		else:
+			weapon_mode = WeaponMode.BLADE
+			_weapon_holder.show_blade()
 
 func _update_animation() -> void:
 	if is_dead:

@@ -9,7 +9,7 @@ const GROUND_SHADER_PATH := "res://shaders/swamp_ground.gdshader"
 
 const TERRAIN_SIZE   := 400.0   # world units — large open swamp
 const TERRAIN_RES    := 120     # quads per side
-const TERRAIN_HEIGHT := 3.0     # max height variation in metres
+const TERRAIN_HEIGHT := 10.0     # max height variation in metres
 const TERRAIN_UV_TILE := 14.0   # texture tile count
 
 @onready var ground_mesh : MeshInstance3D   = $Ground/GroundMesh
@@ -164,6 +164,69 @@ func _aabb_in_local(obj: Node3D) -> AABB:
 				combined = combined.expand(c)
 	return combined
 
+func _spawn_foliage() -> void:
+	var tree_scene  := load("res://assets/environment/outdoor/tree.glb")  as PackedScene
+	var plant_scene := load("res://assets/environment/outdoor/plant.glb") as PackedScene
+	var rock_scene  := load("res://assets/environment/outdoor/rock.glb")  as PackedScene
+	var half := TERRAIN_SIZE * 0.5
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7391
+
+	# Trees — one candidate per 22×22 cell, ~40 % placed
+	var tree_step := 22
+	var tree_count := int(TERRAIN_SIZE / tree_step)
+	for xi in range(tree_count):
+		for zi in range(tree_count):
+			var wx := (xi + 0.5) * tree_step - half + rng.randf_range(-8.0, 8.0)
+			var wz := (zi + 0.5) * tree_step - half + rng.randf_range(-8.0, 8.0)
+			if wx * wx + wz * wz < 30.0 * 30.0:
+				continue
+			if rng.randf() > 0.4:
+				continue
+			var h := _height_at(wx, wz)
+			if h < -1.5:
+				continue
+			var inst := tree_scene.instantiate() as Node3D
+			var sc := rng.randf_range(5.0, 8.5)
+			inst.transform = Transform3D(Basis().scaled(Vector3(sc, sc, sc)), Vector3(wx, h, wz))
+			$Trees.add_child(inst)
+
+	# Plants — denser grid, ~40 % placed
+	var plant_step := 14
+	var plant_count := int(TERRAIN_SIZE / plant_step)
+	for xi in range(plant_count):
+		for zi in range(plant_count):
+			var wx := (xi + 0.5) * plant_step - half + rng.randf_range(-5.0, 5.0)
+			var wz := (zi + 0.5) * plant_step - half + rng.randf_range(-5.0, 5.0)
+			if wx * wx + wz * wz < 15.0 * 15.0:
+				continue
+			if rng.randf() > 0.4:
+				continue
+			var h := _height_at(wx, wz)
+			if h < -1.5:
+				continue
+			var inst := plant_scene.instantiate() as Node3D
+			var sc := rng.randf_range(1.0, 2.0)
+			inst.transform = Transform3D(Basis().scaled(Vector3(sc, sc, sc)), Vector3(wx, h, wz))
+			$Plants.add_child(inst)
+
+	# Rocks — sparse, ~35 % placed
+	var rock_step := 28
+	var rock_count := int(TERRAIN_SIZE / rock_step)
+	for xi in range(rock_count):
+		for zi in range(rock_count):
+			var wx := (xi + 0.5) * rock_step - half + rng.randf_range(-10.0, 10.0)
+			var wz := (zi + 0.5) * rock_step - half + rng.randf_range(-10.0, 10.0)
+			if wx * wx + wz * wz < 20.0 * 20.0:
+				continue
+			if rng.randf() > 0.35:
+				continue
+			var h := _height_at(wx, wz)
+			var inst := rock_scene.instantiate() as Node3D
+			var sc := rng.randf_range(1.4, 2.5)
+			inst.transform = Transform3D(Basis().scaled(Vector3(sc, sc, sc)), Vector3(wx, h, wz))
+			$Rocks.add_child(inst)
+
 func _add_tree_colliders() -> void:
 	for tree in $Trees.get_children():
 		var aabb := _aabb_in_local(tree as Node3D)
@@ -250,5 +313,6 @@ func _do_lightning(light: OmniLight3D, timer: Timer) -> void:
 func _ready() -> void:
 	_build_terrain()
 	_apply_water_shader()
+	_spawn_foliage()
 	_add_tree_colliders()
 	_setup_weather()

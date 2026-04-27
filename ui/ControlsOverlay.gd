@@ -1,14 +1,15 @@
 extends CanvasLayer
 
 const ACTIONS: Dictionary = {
-	"Move Forward":  "move_forward",
-	"Move Back":     "move_back",
-	"Move Left":     "move_left",
-	"Move Right":    "move_right",
-	"Jump":          "jump",
-	"Dodge":         "dodge",
-	"Interact":      "interact",
-	"Attack":        "attack",
+	"Move Forward":   "move_forward",
+	"Move Back":      "move_back",
+	"Move Left":      "move_left",
+	"Move Right":     "move_right",
+	"Jump":           "jump",
+	"Dodge":          "dodge",
+	"Interact":       "interact",
+	"Attack":         "attack",
+	"Switch Weapon":  "switch_weapon",
 }
 
 const SAVE_PATH := "user://keybindings.cfg"

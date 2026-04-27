@@ -1,23 +1,24 @@
 extends Node3D
 
 ## Manages Litta's visual mesh and animations.
-## Instances the base GLB (Idle) and merges animations from the other per-animation GLBs
-## into a single AnimationPlayer at runtime. Works because all GLBs share the same skeleton.
+## Instances the base GLB and merges animations from per-animation GLBs at runtime.
 
 const _DIR = "res://assets/characters/litta/"
 
-# Maps our internal animation names to the GLB files that contain them.
 const _SOURCES := {
-	"idle":   "Meshy_AI_Icebound_Warrior_biped_Animation_Idle_withSkin.glb",
-	"run":    "Meshy_AI_Icebound_Warrior_biped_Animation_Running_withSkin.glb",
-	"walk":   "Meshy_AI_Icebound_Warrior_biped_Animation_Walking_withSkin.glb",
-	"attack": "Meshy_AI_Icebound_Warrior_biped_Animation_Attack_withSkin.glb",
-	"dead":   "Meshy_AI_Icebound_Warrior_biped_Animation_Dead_withSkin.glb",
-	"jump":     "Meshy_AI_Animation_Regular_Jump_withSkin.glb",
-	"run_jump": "Meshy_AI_Animation_Jump_Over_Obstacle_2_withSkin.glb",
+	"idle":         "Meshy_AI_Icebound_Warrior_biped_Animation_Idle_withSkin.glb",
+	"walk":         "Meshy_AI_Icebound_Warrior_biped_Animation_Walking_withSkin.glb",
+	"run":          "Meshy_AI_Icebound_Warrior_biped_Animation_Running_withSkin.glb",
+	"melee_attack": "Meshy_AI_Icebound_Warrior_biped_Animation_Attack_withSkin.glb",
+	"dead":         "Meshy_AI_Icebound_Warrior_biped_Animation_Dead_withSkin.glb",
+	"jump":         "Meshy_AI_Animation_Regular_Jump_withSkin.glb",
+	"run_jump":     "Meshy_AI_Animation_Jump_Over_Obstacle_2_withSkin.glb",
+	"shoot":        "Meshy_AI_Icebound_Warrior_biped_Animation_Run_and_Shoot_withSkin.glb",
 }
 
 var _player: AnimationPlayer
+var _skeleton: Skeleton3D
+var _playing_once: bool = false
 
 func _ready() -> void:
 	_build()
@@ -27,6 +28,8 @@ func _build() -> void:
 	add_child(base)
 
 	_player = _find_player(base)
+	_skeleton = _find_skeleton(base)
+
 	if not _player:
 		push_error("LittaModel: no AnimationPlayer found in base GLB")
 		return
@@ -40,15 +43,14 @@ func _build() -> void:
 
 	play("idle")
 
-# Animations that have root motion baked in — strip their position tracks on import.
-const _STRIP_ROOT_MOTION := ["run", "walk", "attack", "dead", "jump", "run_jump"]
+const _STRIP_ROOT_MOTION := ["run", "walk", "melee_attack", "shoot", "dead", "jump", "run_jump", "dodge"]
 
 func _import_anim(our_name: String, filename: String) -> void:
 	var scene = load(_DIR + filename)
 	if not scene:
 		return
 	var inst = scene.instantiate()
-	var src = _find_player(inst)
+	var src := _find_player(inst)
 	if src:
 		var src_lib = src.get_animation_library("")
 		var dst_lib = _player.get_animation_library("")
@@ -56,7 +58,7 @@ func _import_anim(our_name: String, filename: String) -> void:
 			if src_name == "RESET":
 				continue
 			if not dst_lib.has_animation(our_name):
-				var anim := src_lib.get_animation(src_name).duplicate()
+				var anim: Animation = src_lib.get_animation(src_name).duplicate()
 				if our_name in _STRIP_ROOT_MOTION:
 					_strip_root_motion(anim)
 				dst_lib.add_animation(our_name, anim)
@@ -64,9 +66,6 @@ func _import_anim(our_name: String, filename: String) -> void:
 	inst.queue_free()
 
 func _strip_root_motion(anim: Animation) -> void:
-	# Remove all TYPE_POSITION_3D tracks — root motion can be on a plain node
-	# or on a root bone (e.g. "Skeleton3D:Hips"), so we strip both cases.
-	# Standard biped animations are purely rotational; position tracks == root motion.
 	for i in range(anim.get_track_count() - 1, -1, -1):
 		if anim.track_get_type(i) == Animation.TYPE_POSITION_3D:
 			anim.remove_track(i)
@@ -85,12 +84,23 @@ func _find_player(node: Node) -> AnimationPlayer:
 	if node is AnimationPlayer:
 		return node
 	for child in node.get_children():
-		var result = _find_player(child)
+		var result := _find_player(child)
 		if result:
 			return result
 	return null
 
-# Per-animation scale corrections for GLB export inconsistencies.
+func _find_skeleton(node: Node) -> Skeleton3D:
+	if node is Skeleton3D:
+		return node
+	for child in node.get_children():
+		var result := _find_skeleton(child)
+		if result:
+			return result
+	return null
+
+func get_skeleton() -> Skeleton3D:
+	return _skeleton
+
 const _ANIM_SCALES := {
 	"run":      1.15,
 	"jump":     1.15,
@@ -98,6 +108,8 @@ const _ANIM_SCALES := {
 }
 
 func play(anim_name: String) -> void:
+	if _playing_once:
+		return
 	if _player and _player.has_animation(anim_name):
 		if _player.current_animation != anim_name:
 			_player.play(anim_name)
@@ -106,7 +118,10 @@ func play(anim_name: String) -> void:
 
 func play_once(anim_name: String, return_to: String = "idle") -> void:
 	if not _player or not _player.has_animation(anim_name):
+		push_warning("LittaModel: animation not found: " + anim_name)
 		return
+	_playing_once = true
 	_player.play(anim_name)
 	await _player.animation_finished
+	_playing_once = false
 	play(return_to)
